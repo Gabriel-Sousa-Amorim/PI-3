@@ -1,0 +1,127 @@
+<div id="avaliacaoModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 overflow-hidden">
+        <div class="bg-emerald-600 px-6 py-4 flex justify-between items-center">
+            <h2 class="text-xl font-bold text-white">Avaliar troca</h2>
+            <button onclick="fecharModalAvaliacao()" class="text-white hover:text-gray-200">
+                <i class="bi bi-x-lg text-xl"></i>
+            </button>
+        </div>
+        <div class="p-6">
+            <div class="flex gap-3 mb-4 pb-3 border-b">
+                <img src="{{ troca.livro.capa_url|default:'/static/images/noCover.png' }}" 
+                     alt="{{ troca.livro.titulo }}"
+                     class="w-16 h-20 object-cover rounded-lg">
+                <div>
+                    <h3 class="font-bold text-gray-800">{{ troca.livro.titulo }}</h3>
+                    <p class="text-sm text-gray-600">{{ troca.livro.autor }}</p>
+                    <p class="text-xs text-gray-500 mt-1">
+                        Troca com: 
+                        {% if avaliando == 'dono' %}
+                            {{ troca.id_interessado.nome }}
+                        {% else %}
+                            {{ troca.id_dono.nome }}
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+            <form id="avaliacaoForm" method="post" action="{% url 'avaliar_troca' troca.id %}">
+                {% csrf_token %}
+                
+                <!-- Estrelas interativas -->
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Sua nota (1 a 5)</label>
+                    <div class="flex gap-1 text-2xl" id="star-rating">
+                        <span data-value="1" class="cursor-pointer hover:text-yellow-500 transition">☆</span>
+                        <span data-value="2" class="cursor-pointer hover:text-yellow-500 transition">☆</span>
+                        <span data-value="3" class="cursor-pointer hover:text-yellow-500 transition">☆</span>
+                        <span data-value="4" class="cursor-pointer hover:text-yellow-500 transition">☆</span>
+                        <span data-value="5" class="cursor-pointer hover:text-yellow-500 transition">☆</span>
+                    </div>
+                    {{ form.nota }}
+                </div>
+
+                <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Comentário (opcional)</label>
+                    {{ form.comentario }}
+                </div>
+
+                <div class="flex gap-3 mt-6">
+                    <button type="button" onclick="fecharModalAvaliacao()" class="flex-1 px-4 py-2 border border-gray-300 rounded-xl hover:bg-gray-50 transition">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="flex-1 bg-emerald-600 text-white px-4 py-2 rounded-xl hover:bg-emerald-700 transition">
+                        Enviar avaliação
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Lógica das estrelas (usar ids únicos para não conflitar)
+    const starsContainer = document.getElementById('star-rating');
+    const notaInput = document.querySelector('#avaliacaoForm input[name="nota"]');
+    if (starsContainer && notaInput) {
+        const stars = starsContainer.querySelectorAll('span');
+        function highlightStars(valor) {
+            stars.forEach((star, idx) => {
+                if (idx < valor) star.innerHTML = '★';
+                else star.innerHTML = '☆';
+            });
+            notaInput.value = valor;
+        }
+        stars.forEach(star => {
+            star.addEventListener('click', () => {
+                const valor = parseInt(star.getAttribute('data-value'));
+                highlightStars(valor);
+            });
+            star.addEventListener('mouseenter', () => {
+                const valor = parseInt(star.getAttribute('data-value'));
+                stars.forEach((s, idx) => {
+                    if (idx < valor) s.innerHTML = '★';
+                    else s.innerHTML = '☆';
+                });
+            });
+            star.addEventListener('mouseleave', () => {
+                const valorAtual = parseInt(notaInput.value) || 3;
+                highlightStars(valorAtual);
+            });
+        });
+        // Inicializa com 3 estrelas
+        highlightStars(3);
+    }
+
+    // Submissão via AJAX
+    const form = document.getElementById('avaliacaoForm');
+    if (form) {
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                });
+                const data = await response.json();
+                if (data.success) {
+                    window.location.reload();
+                } else {
+                    alert('Erro: ' + (data.error || JSON.stringify(data.errors)));
+                }
+            } catch (err) {
+                alert('Erro ao enviar avaliação.');
+            }
+        });
+    }
+
+    function fecharModalAvaliacao() {
+        const modal = document.getElementById('avaliacaoModal');
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    }
+</script>

@@ -4,39 +4,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
     <title>{% block title %}Alexandria | Troca de Livros{% endblock %}</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <style>
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-        }
-        .transition-smooth {
-            transition: all 0.2s ease-in-out;
-        }
-    </style>
+    
+    
+
+    <script>
+        // Gerenciamento de tema (executado imediatamente para evitar flash)
+        (function() {
+            const html = document.documentElement;
+            const saved = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (saved === 'dark' || (saved === null && prefersDark)) {
+                html.classList.add('dark');
+            } else {
+                html.classList.remove('dark');
+            }
+        })();
+    </script>
     {% block extra_head %}{% endblock %}
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased">
+<body>
 
-    {% include 'includes/header.html' %}
+    <header role="banner">
+        {% include 'includes/header.html' %}
+    </header>
 
-    <main class="">
+    <main id="main-content" role="main" tabindex="-1">
         {% block content %}
         {% endblock %}
     </main>
 
-    {% include 'includes/footer.html' %}
+    <footer role="contentinfo">
+        {% include 'includes/footer.html' %}
+    </footer>
 
     <script>
-        // Menu mobile (comum a todas as páginas)
+        // Função para obter o botão de toggle (prioriza o do header, senão usa o fallback)
+        function getToggleButton() {
+            let btn = document.getElementById('darkModeToggle');
+            if (!btn) {
+                btn = document.getElementById('darkModeToggleFallback');
+                if (btn) btn.style.display = 'flex';
+            }
+            return btn;
+        }
+
+        // Função para atualizar o ícone do botão
+        function updateDarkModeButton() {
+            const isDark = document.documentElement.classList.contains('dark');
+            const btn = getToggleButton();
+            if (!btn) return;
+            const icon = btn.querySelector('i');
+            if (icon) {
+                if (isDark) {
+                    icon.className = 'bi bi-sun-fill';
+                } else {
+                    icon.className = 'bi bi-moon-fill';
+                }
+            }
+        }
+
+        // Alternar tema
+        function toggleDarkMode() {
+            const html = document.documentElement;
+            const isDark = html.classList.contains('dark');
+            if (isDark) {
+                html.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            } else {
+                html.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            }
+            updateDarkModeButton();
+        }
+
+        // Menu mobile (existente)
         const menuBtn = document.getElementById('menu-btn');
         const mobileMenu = document.getElementById('mobile-menu');
         if (menuBtn && mobileMenu) {
             menuBtn.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
             });
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            });
         }
+
+        // Configurar evento de clique no botão de tema
+        window.addEventListener('DOMContentLoaded', () => {
+            const toggleBtn = getToggleButton();
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', toggleDarkMode);
+            }
+            updateDarkModeButton();
+        });
+
+        // Sincronizar com outras abas
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                const newTheme = e.newValue;
+                const html = document.documentElement;
+                if (newTheme === 'dark') {
+                    html.classList.add('dark');
+                } else if (newTheme === 'light') {
+                    html.classList.remove('dark');
+                }
+                updateDarkModeButton();
+            }
+        });
     </script>
     {% block extra_js %}{% endblock %}
 </body>

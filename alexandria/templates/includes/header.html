@@ -1,41 +1,85 @@
 {% load static %}
-<nav class="bg-white shadow-md sticky top-0 z-50">
+<nav class="bg-neutral-100 shadow-md sticky top-0 z-50 dark:bg-neutral-900 dark:shadow-neutral-800 transition-colors">
     <div class="container mx-auto px-5 py-4 flex justify-between items-center flex-wrap">
-        <div class="text-2xl font-bold text-emerald-700">
-            <a href="{% url 'home' %}" class="flex items-center gap-2"><i class="bi bi-book-half"></i> Alexandria</a>
-        </div>
-        <div class="hidden md:flex space-x-8 text-gray-600 font-medium">
-            <a href="{% url 'home' %}" class="hover:text-emerald-600 transition-smooth">Início</a>
-            <a href="{% url 'explorar' %}" class="hover:text-emerald-600 transition-smooth">Explorar</a>
-            <a href="{% url 'como-funciona' %}" class="hover:text-emerald-600 transition-smooth">Como Funciona</a>
-            <a href="{% url 'comunidade' %}" class="hover:text-emerald-600 transition-smooth">Comunidade</a>
-        </div>
-        {% if user.is_authenticated %}
-        <div class="flex items-center gap-4">
-            <span class="text-gray-700">Olá, {{ user.nome }}!</span>
-            <a href="{% url 'perfil' %}" class="bg-emerald-600 text-white px-4 py-2 rounded-2xl hover:bg-emerald-700 transition flex gap-2"><i class="bi bi-person"></i> Perfil</a>
-            <a href="{% url 'logout' %}" class="text-red-600 hover:text-red-800 transition flex gap-2 px-4 py-2 border-1 rounded-2xl border-red-400"><i class="bi bi-box-arrow-left"></i> Sair</a>
-        </div>
-        {% else %}
-        <div class="flex items-center gap-5">
-            <a href="{% url 'signin' %}" class="text-emerald-600 hover:text-emerald-800  px-4 py-2 border-1 rounded-2xl border-emerald-400">
-                <i class="bi bi-at"></i>
-                Cadastrar
-            </a>
-            <a href="{% url 'login' %}"
-                class="bg-emerald-600 text-white px-4 py-2 rounded-2xl hover:bg-emerald-700 transition">
-                <i class="bi bi-box-arrow-in-right"></i>
-                Entrar
+        <!-- Logo -->
+        <div>
+            <a href="{% url 'home' %}"
+                class="flex items-center gap-2 text-2xl font-bold text-emerald-800 dark:text-emerald-200">
+                <i class="bi bi-book-half"></i> Alexandria
             </a>
         </div>
-        {% endif %}
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-8 text-neutral-600 font-medium dark:text-neutral-300">
+            <a href="{% url 'home' %}"
+                class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-smooth">Início</a>
+            <a href="{% url 'explorar' %}"
+                class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-smooth">Explorar</a>
+            <a href="{% url 'como-funciona' %}"
+                class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-smooth">Como Funciona</a>
+        </div>
+
+            {% if user.is_authenticated %}
+            <div class="flex items-center gap-4">
+                <span class="text-neutral-700 dark:text-neutral-300">Olá, {{ user.nome }}!</span>
+                <a href="{% url 'perfil' %}"
+                    class="bg-emerald-600 text-white px-4 py-2 rounded-2xl hover:bg-emerald-800 transition flex gap-2 dark:bg-emerald-700 dark:hover:bg-emerald-600">
+                    <i class="bi bi-person"></i> Perfil
+                </a>
+                <a href="{% url 'logout' %}"
+                    class="text-red-600 hover:text-red-800 transition flex gap-2 px-4 py-2 border border-red-400 rounded-2xl dark:text-red-400 dark:hover:text-red-300 dark:border-red-700">
+                    <i class="bi bi-box-arrow-left"></i> Sair
+                </a>
+            </div>
+            {% else %}
+            <div class="flex items-center gap-5">
+                <a href="{% url 'signin' %}"
+                    class="border-2 border-emerald-800 text-emerald-800 px-4 py-2 rounded-2xl hover:bg-emerald-200 transition font-black flex gap-2 dark:border-emerald-400 dark:text-emerald-400 dark:hover:bg-emerald-800">
+                    <i class="bi bi-at"></i> Cadastrar
+                </a>
+                <a href="{% url 'login' %}"
+                    class="bg-emerald-800 text-white px-4 py-2 rounded-2xl hover:bg-emerald-700 transition font-black flex gap-2 dark:bg-emerald-600 dark:hover:bg-emerald-500">
+                    <i class="bi bi-box-arrow-in-right"></i> Entrar
+                </a>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+            <button id="menu-btn" class="text-neutral-600 focus:outline-none dark:text-neutral-300" aria-label="Menu">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                    </path>
+                </svg>
+            </button>
+        </div>
     </div>
-    <div class="md:hidden">
-        <button id="menu-btn" class="text-gray-600 focus:outline-none">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
-                </path>
-            </svg>
-        </button>
+
+    <!-- Mobile Menu (dropdown) -->
+    <div id="mobile-menu"
+        class="md:hidden hidden bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-700">
+        <div class="flex flex-col space-y-3 px-5 py-4 text-neutral-600 dark:text-neutral-300">
+            <a href="{% url 'home' %}" class="hover:text-emerald-600 dark:hover:text-emerald-400 py-2">Início</a>
+            <a href="{% url 'explorar' %}" class="hover:text-emerald-600 dark:hover:text-emerald-400 py-2">Explorar</a>
+            <a href="{% url 'como-funciona' %}" class="hover:text-emerald-600 dark:hover:text-emerald-400 py-2">Como
+                Funciona</a>
+            <hr class="my-2 border-neutral-200 dark:border-neutral-700">
+            {% if user.is_authenticated %}
+            <a href="{% url 'perfil' %}" class="flex gap-2 items-center py-2"><i class="bi bi-person"></i> Meu
+                Perfil{% if pending_requests_count > 0 %}
+                <span
+                    class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+                    {{ pending_requests_count }}
+                </span>
+                {% endif %}</a>
+            <a href="{% url 'logout' %}" class="flex gap-2 items-center py-2 text-red-600 dark:text-red-400"><i
+                    class="bi bi-box-arrow-left"></i> Sair</a>
+            {% else %}
+            <a href="{% url 'signin' %}" class="flex gap-2 items-center py-2"><i class="bi bi-at"></i> Cadastrar</a>
+            <a href="{% url 'login' %}" class="flex gap-2 items-center py-2"><i class="bi bi-box-arrow-in-right"></i>
+                Entrar</a>
+            {% endif %}
+        </div>
     </div>
-    </div>
+</nav>

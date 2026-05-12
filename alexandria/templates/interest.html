@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-2xl font-bold mb-6">
+    Interessados em "{{ livro.titulo }}"
+  </h1>
+
+  {% if interessados %}
+    <ul class="space-y-3">
+      {% for interesse in interessados %}
+        <li class="bg-white rounded-xl shadow p-4 flex items-center justify-between">
+          <div>
+            <a href="{% url 'perfil_usuario' interesse.usuario.id %}" 
+               class="text-emerald-600 font-semibold hover:underline">
+               {{ interesse.usuario.nome }}  <!-- ou .username, .first_name -->
+            </a>
+            <p class="text-sm text-gray-500">
+              Interesse registrado em {{ interesse.data|date:"d/m/Y" }}
+            </p>
+          </div>
+          <!-- se quiser alguma ação extra, coloque aqui -->
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-gray-500">Nenhum interessado até o momento.</p>
+  {% endif %}
+</div>
+{% endblock %}

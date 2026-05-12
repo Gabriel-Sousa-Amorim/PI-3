@@ -4,8 +4,9 @@
 {% block title %}Alexandria | Meu Perfil{% endblock %}
 
 {% block content %}
+
 <!-- Hero Section do Perfil -->
-<section class="bg-gradient-to-br from-emerald-50 via-white to-gray-100 py-12 md:py-16">
+<section class="bg-gradient-to-br from-emerald-50 via-white to-neutral-100 py-12 md:py-16">
     <div class="container mx-auto px-5">
         <div class="max-w-5xl mx-auto">
             <div class="flex flex-col md:flex-row gap-6 items-center md:items-start">
@@ -18,54 +19,81 @@
                 
                 <!-- Informações básicas -->
                 <div class="flex-1 text-center md:text-left">
-                    <h1 class="text-3xl md:text-4xl font-bold text-gray-800">{{ user.nome }}</h1>
+                    <h1 class="text-3xl md:text-4xl font-bold text-neutral-800">{{ user.nome }}</h1>
                     <div class="flex flex-wrap gap-2 justify-center md:justify-start mt-2">
                         <span class="inline-flex items-center gap-1 bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm">
                             <i class="bi bi-star"></i> 
-                            {% if user.rating == None %}
+                            {% if user.confiability == None %}
                                 Nunca foi avaliado
                             {% else %}
-                                {{ user.rating }}
+                                {{ user.confiability }}
                             {% endif %}
                         </span>
                         <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm">
-                            <i class="bi bi-geo-alt-fill"></i> {{ user.regiao }}
+                            <i class="bi bi-geo-alt-fill"></i> {{user.cidade}} - {{ user.estado }}
                         </span>
                         <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
                             <i class="bi bi-calendar3"></i> Membro desde {{ user.joined_at|date:"F Y" }}
                         </span>
                     </div>
-                    <p class="text-gray-600 mt-3 max-w-md mx-auto md:mx-0">
+                    <p class="text-neutral-600 mt-3 max-w-md mx-auto md:mx-0">
                         <i class="bi bi-envelope"></i> {{ user.email }}
                     </p>
-                    {% if user.bio %}
-                    <p class="text-gray-600 mt-2 max-w-md mx-auto md:mx-0">{{ user.bio }}</p>
-                    {% endif %}
                 </div>
                 
-                <!-- Botão Editar -->
-                <button class="bg-white border border-gray-300 text-gray-700 px-6 py-2 rounded-xl hover:bg-gray-50 transition flex items-center gap-2">
-                    <i class="bi bi-pencil-square"></i> Editar perfil
-                </button>
             </div>
         </div>
     </div>
 </section>
 
+<!-- ➕ Bloco de mensagens (adicione aqui) -->
+{% if messages %}
+<div class="container mx-auto px-5 my-4">
+    {% for message in messages %}
+    <div class="p-4 rounded-xl {% if message.tags == 'success' %}bg-green-100 text-green-800 border border-green-300{% elif message.tags == 'error' %}bg-red-100 text-red-800 border border-red-300{% else %}bg-blue-100 text-blue-800{% endif %}">
+        {{ message }}
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
 <!-- Menu de Navegação do Perfil -->
-<section class="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
+<section class="bg-white border-b border-neutral-200 sticky top-0 z-10 shadow-sm">
     <div class="container mx-auto px-5">
         <div class="flex overflow-x-auto justify-center md:justify-start gap-1">
-            <button class="tab-btn active px-6 py-3 text-gray-700 font-medium border-b-2 border-emerald-600 hover:text-emerald-600 transition" data-tab="livros">
+            <button class="tab-btn active px-6 py-3 text-neutral-700 font-medium border-b-2 border-emerald-600 hover:text-emerald-600 transition" data-tab="livros">
                 <i class="bi bi-book"></i> Meus Livros
             </button>
-            <button class="tab-btn px-6 py-3 text-gray-700 font-medium border-b-2 border-transparent hover:text-emerald-600 transition" data-tab="interesses">
+                        <!-- Aba Solicitações -->
+            <button class="tab-btn px-6 py-3 text-neutral-700 font-medium border-b-2 border-transparent hover:text-emerald-600 transition" data-tab="solicitacoes">
+                <i class="bi bi-bell"></i> Solicitações
+                {% if solicitacoes_pendentes_count > 0 %}
+                <span id="badge-solicitacoes" class="ml-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                    {{ solicitacoes_pendentes_count }}
+                </span>
+                {% endif %}
+            </button>
+
+            <!-- Aba Interesses -->
+            <button class="tab-btn px-6 py-3 text-neutral-700 font-medium border-b-2 border-transparent hover:text-emerald-600 transition" data-tab="interesses">
                 <i class="bi bi-heart"></i> Interesses
+                {% if interesses_pendentes_count > 0 %}
+                <span id="badge-interesses" class="ml-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                    {{ interesses_pendentes_count }}
+                </span>
+                {% endif %}
             </button>
-            <button class="tab-btn px-6 py-3 text-gray-700 font-medium border-b-2 border-transparent hover:text-emerald-600 transition" data-tab="trocas">
+
+            <!-- Aba Trocas -->
+            <button class="tab-btn px-6 py-3 text-neutral-700 font-medium border-b-2 border-transparent hover:text-emerald-600 transition" data-tab="trocas">
                 <i class="bi bi-arrow-left-right"></i> Trocas
+                {% if trocas_andamento_count > 0 %}
+                <span id="badge-trocas" class="ml-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
+                    {{ trocas_andamento_count }}
+                </span>
+                {% endif %}
             </button>
-            <button class="tab-btn px-6 py-3 text-gray-700 font-medium border-b-2 border-transparent hover:text-emerald-600 transition" data-tab="config">
+            <button class="tab-btn px-6 py-3 text-neutral-700 font-medium border-b-2 border-transparent hover:text-emerald-600 transition" data-tab="config">
                 <i class="bi bi-gear"></i> Configurações
             </button>
         </div>
@@ -73,41 +101,46 @@
 </section>
 
 <!-- Conteúdo do Perfil -->
-<section class="py-12 bg-gray-50">
+<section class="py-12 bg-neutral-50">
     <div class="container mx-auto px-5 max-w-6xl">
         
         <!-- TAB 1: MEUS LIVROS -->
         <div id="tab-livros" class="tab-content active">
             <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
-                <h2 class="text-2xl font-bold text-gray-800">
+                <h2 class="text-2xl font-bold text-neutral-800">
                     <i class="bi bi-book text-emerald-600"></i> Meus Livros
                 </h2>
-                <button class="bg-emerald-600 text-white px-4 py-2 rounded-xl hover:bg-emerald-700 transition flex items-center gap-2">
-                    <i class="bi bi-plus-lg"></i> Adicionar Livro
-                </button>
+                {% include 'includes/addBookButton.html' %}
             </div>
             
             {% if livros %}
+            {% load static %}
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {% for livro in livros %}
                 <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-smooth flex flex-col">
                     <div class="h-48 overflow-hidden relative">
-                        <img src="{{ livro.capa_url|default:'/static/images/no-cover.png' }}" 
+                        <img src="{{ livro.capa_url|default:'/static/images/noCover.png' }}" 
                              alt="{{ livro.titulo }}"
                              class="w-full h-full object-cover"
-                             onerror="this.src='/static/images/no-cover.png'">
+                             onerror="this.src='/static/images/noCover.png'">
                         <div class="absolute top-2 right-2 flex gap-1">
-                            <button class="bg-white rounded-full p-1.5 shadow-md hover:bg-gray-100 transition" title="Editar">
+                            <a href="{% url 'editar_livro' livro.id %}" 
+                               class="bg-white rounded-full p-1.5 shadow-md hover:bg-neutral-100 transition" 
+                               title="Editar">
                                 <i class="bi bi-pencil text-emerald-600 text-sm"></i>
-                            </button>
-                            <button class="bg-white rounded-full p-1.5 shadow-md hover:bg-gray-100 transition" title="Remover">
-                                <i class="bi bi-trash text-red-600 text-sm"></i>
-                            </button>
+                            </a>
+                            <form method="post" action="{% url 'deletar_livro' livro.id %}" 
+                                  onsubmit="return confirm('Tem certeza que deseja remover este livro?')">
+                                {% csrf_token %}
+                                <button type="submit" class="bg-white rounded-full p-1.5 shadow-md hover:bg-neutral-100 transition" title="Remover">
+                                    <i class="bi bi-trash text-red-600 text-sm"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                     <div class="p-4 flex-1">
-                        <h3 class="font-bold text-gray-800 mb-1 line-clamp-1">{{ livro.titulo|default:"Título indisponível" }}</h3>
-                        <p class="text-sm text-gray-500">{{ livro.autor|default:"Autor desconhecido" }}</p>
+                        <h3 class="font-bold text-neutral-800 mb-1 line-clamp-1">{{ livro.titulo|default:"Título indisponível" }}</h3>
+                        <p class="text-sm text-neutral-500">{{ livro.autor|default:"Autor desconhecido" }}</p>
                         <div class="flex flex-wrap gap-1 mt-2">
                             <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">{{ livro.get_estado_display }}</span>
                             {% if livro.em_doacao %}
@@ -115,13 +148,14 @@
                             {% else %}
                                 <span class="text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded-full">Troca</span>
                             {% endif %}
-                            <span class="text-xs bg-gray-100 text-gray-800 px-2 py-0.5 rounded-full">
+                            <span class="text-xs bg-neutral-100 text-neutral-800 px-2 py-0.5 rounded-full">
                                 {{ livro.disponivel|yesno:"Disponível,Indisponível" }}
                             </span>
                         </div>
                     </div>
                     <div class="px-4 pb-4">
-                        <a href="#" class="block text-center text-emerald-600 text-sm font-medium hover:underline">
+                        <a href="{% url 'detalhe_livro' livro.id %}"
+                         class="block text-center text-emerald-600 text-sm font-medium hover:underline">
                             Ver detalhes →
                         </a>
                     </div>
@@ -130,49 +164,92 @@
             </div>
             {% else %}
             <div class="bg-white rounded-xl p-12 text-center">
-                <i class="bi bi-book text-6xl text-gray-300"></i>
-                <h3 class="text-xl font-semibold text-gray-700 mt-4">Nenhum livro cadastrado</h3>
-                <p class="text-gray-500 mt-2">Comece adicionando seus livros para troca ou doação.</p>
+                <i class="bi bi-book text-6xl text-neutral-300"></i>
+                <h3 class="text-xl font-semibold text-neutral-700 mt-4">Nenhum livro cadastrado</h3>
+                <p class="text-neutral-500 mt-2">Comece adicionando seus livros para troca ou doação.</p>
             </div>
             {% endif %}
         </div>
         
+<!-- TAB SOLICITAÇÕES (pendentes) -->
+<div id="tab-solicitacoes" class="tab-content hidden">
+    <h2 class="text-2xl font-bold text-neutral-800 mb-6">
+        <i class="bi bi-bell text-emerald-600"></i> Solicitações de Interesses
+    </h2>
+
+    {% if solicitacoes_recebidas %}
+    <div class="space-y-4">
+        {% for solicitacao in solicitacoes_recebidas %}
+<div class="bg-white rounded-xl shadow-md p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+    <div class="flex gap-4">
+        <img src="{{ solicitacao.id_livro.capa_url|default:'/static/images/noCover.png' }}" class="w-16 h-20 object-cover rounded">
+        <div>
+            <h3 class="font-bold">{{ solicitacao.id_livro.titulo }}</h3>
+            <p class="text-sm text-neutral-500">
+                <i class="bi bi-person"></i> {{ solicitacao.id_usuario.nome }} quer este livro
+            </p>
+            <p class="text-xs text-neutral-400">
+                <i class="bi bi-calendar"></i> {{ solicitacao.data_interesse|date:"d/m/Y" }}
+            </p>
+            <!-- INFORMAÇÕES DO INTERESSADO -->
+            <div class="mt-2 text-xs text-neutral-600 bg-neutral-50 p-2 rounded-md">
+                <p><i class="bi bi-envelope"></i> Localização: {{ solicitacao.id_usuario.cidade }} (Zona {{ solicitacao.id_usuario.get_zona_display }}) - {{ solicitacao.id_usuario.estado }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="flex gap-2">
+        <a href="{% url 'aceitar_interesse' solicitacao.id %}" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-emerald-700 transition">
+            <i class="bi bi-check-lg"></i> Aceitar
+        </a>
+        <a href="{% url 'recusar_interesse' solicitacao.id %}" class="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm hover:bg-red-200 transition">
+            <i class="bi bi-x-lg"></i> Recusar
+        </a>
+    </div>
+</div>
+{% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white rounded-xl p-12 text-center">
+        <i class="bi bi-bell-slash text-6xl text-neutral-300"></i>
+        <h3 class="text-xl font-semibold text-neutral-700 mt-4">Nenhuma solicitação pendente</h3>
+        <p class="text-neutral-500 mt-2">Quando alguém se interessar por um dos seus livros, aparecerá aqui.</p>
+    </div>
+    {% endif %}
+</div>
+
         <!-- TAB 2: INTERESSES -->
         <div id="tab-interesses" class="tab-content hidden">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">
-                <i class="bi bi-heart text-emerald-600"></i> Livros que tenho interesse
+            <h2 class="text-2xl font-bold text-neutral-800 mb-6">
+                <i class="bi bi-heart text-emerald-600"></i> Livros que tenho Interesses
             </h2>
             
-            {% if interesses %}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {% for interesse in interesses %}
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-smooth flex">
-                    <div class="w-24 h-32 overflow-hidden">
-                        <img src="{{ interesse.livro.capa_url|default:'/static/images/no-cover.png' }}" 
-                             alt="{{ interesse.livro.titulo }}"
-                             class="w-full h-full object-cover">
-                    </div>
-                    <div class="flex-1 p-3">
-                        <h3 class="font-bold text-gray-800 text-sm line-clamp-2">{{ interesse.livro.titulo|default:"Título indisponível" }}</h3>
-                        <p class="text-xs text-gray-500 mt-1">{{ interesse.livro.autor|default:"Autor desconhecido"|truncatechars:30 }}</p>
-                        <p class="text-xs text-gray-400 mt-1">
-                            <i class="bi bi-person"></i> Dono: {{ interesse.livro.id_dono.nome }}
-                        </p>
-                        <p class="text-xs text-gray-400">
-                            <i class="bi bi-calendar"></i> Interesse em: {{ interesse.data_interesse|date:"d/m/Y" }}
-                        </p>
-                        <button class="mt-2 w-full bg-emerald-600 text-white py-1 rounded-lg text-xs font-medium hover:bg-emerald-700 transition">
-                            Entrar em contato
-                        </button>
-                    </div>
+            {% if interesses_enviados %}   <!-- corrigido -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {% for interesse in interesses_enviados %}
+                        <div class="bg-white rounded-xl shadow-md p-4 flex gap-4">
+                        <img src="{{ interesse.id_livro.capa_url|default:'/static/images/noCover.png' }}" class="w-16 h-20 object-cover rounded">
+                        <div>
+                            <h3 class="font-bold">{{ interesse.id_livro.titulo }}</h3>
+                            <p class="text-sm text-neutral-500">Dono: {{ interesse.id_livro.id_dono.nome }}</p>
+                            <p class="text-xs">
+                                Status: 
+                                <span class="
+                                    {% if interesse.status == 'A' %}text-green-600 font-medium
+                                    {% elif interesse.status == 'R' %}text-red-600 font-medium
+                                    {% else %}text-neutral-500{% endif %}
+                                ">
+                                    {{ interesse.get_status_display }}
+                                </span>
+                            </p>
+                        </div>
                 </div>
                 {% endfor %}
             </div>
             {% else %}
             <div class="bg-white rounded-xl p-12 text-center">
-                <i class="bi bi-heart text-6xl text-gray-300"></i>
-                <h3 class="text-xl font-semibold text-gray-700 mt-4">Nenhum interesse registrado</h3>
-                <p class="text-gray-500 mt-2">Explore livros e manifeste interesse em títulos que você quer.</p>
+                <i class="bi bi-heart text-6xl text-neutral-300"></i>
+                <h3 class="text-xl font-semibold text-neutral-700 mt-4">Nenhum Interesses registrado</h3>
+                <p class="text-neutral-500 mt-2">Explore livros e manifeste Interesses em títulos que você quer.</p>
                 <a href="{% url 'explorar' %}" class="inline-block mt-6 bg-emerald-600 text-white px-6 py-2 rounded-xl hover:bg-emerald-700 transition">
                     Explorar livros
                 </a>
@@ -180,133 +257,303 @@
             {% endif %}
         </div>
         
-        <!-- TAB 3: TROCAS -->
-        <div id="tab-trocas" class="tab-content hidden">
-            <h2 class="text-2xl font-bold text-gray-800 mb-6">
-                <i class="bi bi-arrow-left-right text-emerald-600"></i> Histórico de Trocas
-            </h2>
-            
-            {% if trocas %}
-            <div class="space-y-4">
-                {% for troca in trocas %}
-                <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                        <div class="flex gap-4">
-                            <div class="w-16 h-20 overflow-hidden rounded-lg bg-gray-100">
-                                <img src="{{ troca.livro.capa_url|default:'/static/images/no-cover.png' }}" 
-                                     alt="{{ troca.livro.titulo }}"
-                                     class="w-full h-full object-cover">
-                            </div>
-                            <div>
-                                <h3 class="font-bold text-gray-800">{{ troca.livro.titulo|default:"Título indisponível" }}</h3>
-                                <p class="text-sm text-gray-500">{{ troca.livro.autor|default:"Autor desconhecido" }}</p>
-                                <div class="flex flex-wrap gap-2 mt-1">
-                                    <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-                                        <i class="bi bi-person"></i> {{ troca.id_dono.nome }}
-                                    </span>
-                                    <span class="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full">
-                                        <i class="bi bi-person-check"></i> {{ troca.id_interessado.nome }}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-sm text-gray-500">
-                                <i class="bi bi-calendar"></i> {{ troca.data_troca|date:"d/m/Y" }}
-                            </p>
-                            <span class="inline-block mt-1 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
-                                Concluída
+<!-- TAB 3: TROCAS -->
+<div id="tab-trocas" class="tab-content hidden">
+    <h2 class="text-2xl font-bold text-neutral-800 mb-6">
+        <i class="bi bi-arrow-left-right text-emerald-600"></i> Histórico de Trocas
+    </h2>
+
+    {% if trocas %}
+    <div class="space-y-4">
+        {% for troca in trocas %}
+        <div class="bg-white rounded-xl shadow-md p-5 hover:shadow-lg transition">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="flex gap-4">
+                    <div class="w-16 h-20 overflow-hidden rounded-lg bg-neutral-100">
+                        <img src="{{ troca.livro.capa_url|default:'/static/images/noCover.png' }}" 
+                             alt="{{ troca.livro.titulo }}"
+                             class="w-full h-full object-cover">
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-neutral-800">{{ troca.livro.titulo|default:"Título indisponível" }}</h3>
+                        <p class="text-sm text-neutral-500">{{ troca.livro.autor|default:"Autor desconhecido" }}</p>
+                        <div class="flex flex-wrap gap-2 mt-1">
+                            <span class="text-xs bg-green-200 text-green-600 px-2 py-0.5 rounded-full">
+                                <i class="bi bi-person"></i> Dono: {{ troca.id_dono.nome }}
+                            </span>
+                            <span class="text-xs bg-sky-200 text-sky-600 px-2 py-0.5 rounded-full">
+                                <i class="bi bi-person-check"></i> Interessado: {{ troca.id_interessado.nome }}
                             </span>
                         </div>
+                        
+                        <div class="mt-1 text-xs text-neutral-500">
+                            {% if user == troca.id_dono %}
+                               <p>
+                                    <i class="bi bi-envelope"></i> E‑mail do interessado: 
+                                    <a href="mailto:{{ troca.id_interessado.email }}" class="text-emerald-600 hover:underline">
+                                        {{ troca.id_interessado.email }}
+                                    </a>
+                                </p>
+                            {% else %}
+                                <p><i class="bi bi-envelope"></i> Aguarde o dono entrar em contato com você:</p>
+                            {% endif %}
+                        </div>
                     </div>
                 </div>
-                {% endfor %}
+                <div class="text-right">
+                    <p class="text-sm text-neutral-500">
+                        <i class="bi bi-calendar"></i> {{ troca.data_troca|date:"d/m/Y" }}
+                    </p>
+
+                    <!-- Badge de status -->
+                    {% if troca.status == 'E' %}
+                        <span class="inline-block mt-1 px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">
+                            Em andamento
+                        </span>
+                    {% elif troca.status == 'C' %}
+                        <span class="inline-block mt-1 px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
+                            Concluída
+                        </span>
+                    {% elif troca.status == 'D' %}
+                        <span class="inline-block mt-1 px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-xs font-medium">
+                            Desistida
+                        </span>
+                    {% endif %}
+
+                    <!-- Botões de ação (apenas para trocas em andamento) -->
+                    {% if troca.status == 'E' %}
+                        <div class="flex gap-2 mt-3 justify-end">
+                            <a href="{% url 'desistir_troca' troca.id %}"
+                               class="bg-red-100 text-red-700 px-3 py-1.5 rounded-lg text-sm hover:bg-red-200 transition"
+                               onclick="return confirm('Tem certeza que deseja desistir desta troca? O livro voltará a ficar disponível.')">
+                                Desistir
+                            </a>
+                            <a href="{% url 'finalizar_troca' troca.id %}"
+                               class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-emerald-700 transition"
+                               onclick="return confirm('Confirmar que a troca foi concluída com sucesso?')">
+                                Finalizar Troca
+                            </a>
+                        </div>
+                    {% endif %}
+
+                    <!-- Link para avaliar (apenas trocas concluídas e se ainda não avaliou) -->
+                    {% if troca.status == 'C' %}
+                        {% if user == troca.id_dono and not troca.avaliacao_dono %}
+                            <div class="mt-3">
+                                <a href="{% url 'avaliar_troca' troca.id %}"
+                                   class="text-emerald-600 text-sm font-medium hover:underline">
+                                    <i class="bi bi-star"></i> Avaliar experiência
+                                </a>
+                            </div>
+                        {% elif user == troca.id_interessado and not troca.avaliacao_interessado %}
+                            <div class="mt-3">
+                                <a href="{% url 'avaliar_troca' troca.id %}"
+                                   class="text-emerald-600 text-sm font-medium hover:underline">
+                                    <i class="bi bi-star"></i> Avaliar experiência
+                                </a>
+                            </div>
+                        {% elif user == troca.id_dono and troca.avaliacao_dono %}
+                            <div class="mt-3 text-xs text-neutral-400">
+                                <i class="bi bi-check-circle"></i> Você já avaliou esta troca
+                            </div>
+                        {% elif user == troca.id_interessado and troca.avaliacao_interessado %}
+                            <div class="mt-3 text-xs text-neutral-400">
+                                <i class="bi bi-check-circle"></i> Você já avaliou esta troca
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
             </div>
-            {% else %}
-            <div class="bg-white rounded-xl p-12 text-center">
-                <i class="bi bi-arrow-left-right text-6xl text-gray-300"></i>
-                <h3 class="text-xl font-semibold text-gray-700 mt-4">Nenhuma troca realizada</h3>
-                <p class="text-gray-500 mt-2">Quando você realizar trocas, elas aparecerão aqui.</p>
-            </div>
-            {% endif %}
         </div>
-        
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-white rounded-xl p-12 text-center">
+        <i class="bi bi-arrow-left-right text-6xl text-neutral-300"></i>
+        <h3 class="text-xl font-semibold text-neutral-700 mt-4">Nenhuma troca realizada</h3>
+        <p class="text-neutral-500 mt-2">Quando você realizar trocas, elas aparecerão aqui.</p>
+    </div>
+    {% endif %}
+</div>
+
         <!-- TAB 4: CONFIGURAÇÕES -->
         <div id="tab-config" class="tab-content hidden">
-            <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                <div class="border-b border-gray-200 px-6 py-4 bg-gray-50">
-                    <h2 class="text-xl font-bold text-gray-800">
-                        <i class="bi bi-gear text-emerald-600"></i> Configurações da Conta
-                    </h2>
-                </div>
-                <div class="p-6 space-y-6">
-                    <!-- Formulário de edição de perfil -->
-                    <div>
-                        <h3 class="font-semibold text-gray-800 mb-4">Informações Pessoais</h3>
-                        <form method="post" action="{% url 'login' %}" class="space-y-4">
-                            {% csrf_token %}
-                            <div class="grid md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Nome completo</label>
-                                    <input type="text" name="nome" value="{{ user.nome }}" 
-                                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500">
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
-                                    <input type="email" name="email" value="{{ user.email }}" 
-                                           class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50" readonly>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Região</label>
-                                    <select name="regiao" class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                                        <option value="NORTE 1" {% if user.regiao == 'NORTE 1' %}selected{% endif %}>Norte 1</option>
-                                        <option value="NORTE 2" {% if user.regiao == 'NORTE 2' %}selected{% endif %}>Norte 2</option>
-                                        <option value="LESTE 1" {% if user.regiao == 'LESTE 1' %}selected{% endif %}>Leste 1</option>
-                                        <option value="LESTE 2" {% if user.regiao == 'LESTE 2' %}selected{% endif %}>Leste 2</option>
-                                        <option value="SUL" {% if user.regiao == 'SUL' %}selected{% endif %}>Sul</option>
-                                        <option value="SUDESTE" {% if user.regiao == 'SUDESTE' %}selected{% endif %}>Sudeste</option>
-                                        <option value="SUDOESTE" {% if user.regiao == 'SUDOESTE' %}selected{% endif %}>Sudoeste</option>
-                                        <option value="OESTE" {% if user.regiao == 'OESTE' %}selected{% endif %}>Oeste</option>
-                                        <option value="CENTRO" {% if user.regiao == 'CENTRO' %}selected{% endif %}>Centro</option>
-                                        <option value="REGIAO METROPOLITANA" {% if user.regiao == 'REGIAO METROPOLITANA' %}selected{% endif %}>Região Metropolitana</option>
-                                    </select>
-                                </div>
-                                <div>
-                                    <label class="block text-sm font-medium text-gray-700 mb-1">Cidade</label>
-                                    <input type="text" name="cidade" value="{{ user.cidade }}" 
-                                           class="w-full px-4 py-2 border border-gray-300 rounded-lg">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="block text-sm font-medium text-gray-700 mb-1">Biografia</label>
-                                <textarea name="bio" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-lg" 
-                                          placeholder="Conte um pouco sobre você e seus interesses literários...">{{ user.bio|default:'' }}</textarea>
-                            </div>
-                            <button type="submit" class="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition">
-                                Salvar alterações
-                            </button>
-                        </form>
-                    </div>
-                    
-                    <div class="border-t border-gray-200 pt-6">
-                        <h3 class="font-semibold text-gray-800 mb-4">Segurança</h3>
-                        <button class="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-300 transition">
-                            Alterar senha
-                        </button>
-                    </div>
-                    
-                    <div class="border-t border-gray-200 pt-6">
-                        <h3 class="font-semibold text-red-600 mb-4">Área de Risco</h3>
-                        <button class="bg-red-50 text-red-600 px-6 py-2 rounded-lg border border-red-200 hover:bg-red-100 transition">
-                            Desativar conta
-                        </button>
-                    </div>
-                </div>
+    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="border-b border-neutral-200 px-6 py-4 bg-neutral-50">
+            <h2 class="text-xl font-bold text-neutral-800">
+                <i class="bi bi-gear text-emerald-600"></i> Configurações da Conta
+            </h2>
+        </div>
+        <div class="p-6 space-y-8">
+            <!-- Formulário de edição de perfil -->
+            <div>
+                <h3 class="font-semibold text-neutral-800 mb-4">Informações Pessoais</h3>
+<form method="post" action="{% url 'atualizar_perfil' %}" id="form-editar-perfil" class="space-y-4">
+    {% csrf_token %}
+    <div class="grid md:grid-cols-2 gap-4">
+        <div>
+            <label class="block text-sm font-medium text-neutral-700 mb-1">Nome completo</label>
+            <input type="text" name="nome" value="{{ user.nome }}" class="w-full px-4 py-2 border border-neutral-300 rounded-lg">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-neutral-700 mb-1">Cidade</label>
+            <input type="text" name="cidade" value="{{ user.cidade }}" class="w-full px-4 py-2 border border-neutral-300 rounded-lg">
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-neutral-700 mb-1">Região</label>
+            <select name="regiao" id="id_regiao" class="w-full px-4 py-2 border border-neutral-300 rounded-lg">
+                <option value="">Selecione uma região</option>
+                {% for cod, nome in regioes_choices %}
+                    <option value="{{ cod }}" {% if user.regiao == cod %}selected{% endif %}>{{ nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-neutral-700 mb-1">Estado</label>
+            <select name="estado" id="id_estado" class="w-full px-4 py-2 border border-neutral-300 rounded-lg">
+                <option value="">Selecione um estado</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-neutral-700 mb-1">Zona (opcional)</label>
+            <select name="zona" id="id_zona" class="w-full px-4 py-2 border border-neutral-300 rounded-lg">
+                <option value="">Selecione uma zona</option>
+                <option value="N" {% if user.zona == 'NORTE' %}selected{% endif %}>Norte</option>
+                <option value="S" {% if user.zona == 'SUL' %}selected{% endif %}>Sul</option>
+                <option value="L" {% if user.zona == 'LESTE' %}selected{% endif %}>Leste</option>
+                <option value="O" {% if user.zona == 'OESTE' %}selected{% endif %}>Oeste</option>
+                <option value="C" {% if user.zona == 'CENTRO' %}selected{% endif %}>Centro</option>
+                <option value="X" {% if user.zona == 'OUTRAS' %}selected{% endif %}>Outras</option>
+            </select>
+        </div>
+    </div>
+    <button type="submit" class="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition">
+        Salvar alterações
+    </button>
+</form>
+            </div>
+
+            <!-- Alterar senha -->
+            <div class="border-t border-neutral-200 pt-6">
+                <h3 class="font-semibold text-neutral-800 mb-4">Segurança</h3>
+                <button onclick="openModal('modalSenha')" class="cursor-pointer bg-neutral-200 text-neutral-700 px-6 py-2 rounded-lg hover:bg-neutral-300 transition">
+                    Alterar senha
+                </button>
+            </div>
+
+            <!-- Desativar conta -->
+            <div class="border-t border-neutral-200 pt-6">
+                <h3 class="font-semibold text-red-600 mb-4">Área de Risco</h3>
+            
+                    <button onclick="openModal('modalDesativar')" class="cursor-pointer bg-red-50 text-red-600 px-6 py-2 rounded-lg border border-red-200 hover:bg-red-100 transition">
+                        Desativar conta
+                    </button>
             </div>
         </div>
     </div>
-</section>
+</div>
 
+<!-- MODAL ALTERAR SENHA -->
+<div id="modalSenha" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 overflow-hidden">
+        <div class="bg-emerald-600 px-6 py-4 flex justify-between items-center">
+            <h2 class="text-xl font-bold text-white">Alterar senha</h2>
+            <button onclick="closeModal('modalSenha')" class="text-white text-2xl">&times;</button>
+        </div>
+        <form method="post" action="{% url 'alterar_senha' %}" class="p-6 space-y-4">
+            {% csrf_token %}
+            {{ password_form.as_p }}
+            <div class="flex gap-3 justify-end mt-6">
+                <button type="button" onclick="closeModal('modalSenha')" class="px-4 py-2 border rounded-lg">Cancelar</button>
+                <button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded-lg">Alterar senha</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- MODAL DESATIVAR CONTA -->
+<div id="modalDesativar" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
+    <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 overflow-hidden">
+        <div class="bg-red-600 px-6 py-4 flex justify-between items-center">
+            <h2 class="text-xl font-bold text-white">Desativar conta</h2>
+            <button onclick="closeModal('modalDesativar')" class="text-white text-2xl">&times;</button>
+        </div>
+        <form method="post" action="{% url 'desativar_conta' %}" class="p-6 space-y-4">
+            {% csrf_token %}
+            <p class="text-neutral-700">Tem certeza que deseja desativar sua conta permanentemente? Todos os seus livros e interesses serão removidos.</p>
+            <label class="flex items-center gap-2">
+                <input type="checkbox" name="confirmar" required class="rounded text-red-600">
+                <span class="text-sm">Confirmo que quero desativar minha conta</span>
+            </label>
+            <div class="flex gap-3 justify-end mt-6">
+                <button type="button" onclick="closeModal('modalDesativar')" class="px-4 py-2 border rounded-lg">Cancelar</button>
+                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg">Desativar permanentemente</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de Avaliação (será preenchido dinamicamente ou via partial) -->
+<div id="modal-avaliacao-container"></div>
+
+<script>
+    // Função para carregar o modal via AJAX quando um link de avaliação for clicado
+    function carregarModalAvaliacao(trocaId) {
+        fetch(`/trocas/${trocaId}/avaliar/`, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(response => response.text())
+        .then(html => {
+            const container = document.getElementById('modal-avaliacao-container');
+            container.innerHTML = html;
+            const modal = document.getElementById('avaliacaoModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        })
+        .catch(err => console.error('Erro ao carregar modal:', err));
+    }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const regiaoSelect = document.querySelector('#id_regiao');
+        const estadoSelect = document.querySelector('#id_estado');
+        const estadoAtual = "{{ user.estado|default:'' }}";
+        const regiaoAtual = "{{ user.regiao|default:'' }}";
+
+        async function carregarEstados(regiao) {
+            if (!regiao) {
+                estadoSelect.innerHTML = '<option value="">Selecione um estado</option>';
+                return;
+            }
+            try {
+                const response = await fetch(`api/estados-por-regiao?regiao=${regiao}`);
+                const data = await response.json();
+                estadoSelect.innerHTML = '<option value="">Selecione um estado</option>';
+                data.estados.forEach(est => {
+                    const option = document.createElement('option');
+                    option.value = est.sigla;
+                    option.textContent = est.nome;
+                    if (est.sigla === estadoAtual) option.selected = true;
+                    estadoSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Erro ao carregar estados:', error);
+                estadoSelect.innerHTML = '<option value="">Erro ao carregar estados</option>';
+            }
+        }
+
+        if (regiaoSelect) {
+            // Carrega estados inicialmente se houver região selecionada
+            if (regiaoAtual) {
+                carregarEstados(regiaoAtual);
+            }
+            regiaoSelect.addEventListener('change', function() {
+                carregarEstados(this.value);
+            });
+        }
+    });
+</script>
 <script>
     // Abas do perfil
     const tabs = document.querySelectorAll('.tab-btn');
@@ -342,6 +589,31 @@
     });
 </script>
 
+<script>
+    // Funções para abrir/fechar modais
+    function openModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+    }
+    function closeModal(id) {
+        const modal = document.getElementById(id);
+        if (modal) {
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+    }
+
+    // Fechar modal ao clicar fora
+    window.onclick = function(event) {
+        if (event.target.classList.contains('fixed')) {
+            closeModal(event.target.id);
+        }
+    }
+</script>
+
 <style>
     .tab-btn.active {
         color: #059669;
@@ -359,4 +631,76 @@
         overflow: hidden;
     }
 </style>
+
+<script>
+    function atualizarBadges() {
+        fetch('{% url "notificacoes_counts" %}')
+            .then(response => response.json())
+            .then(data => {
+                // Atualiza badge de Solicitações
+                const badgeSol = document.getElementById('badge-solicitacoes');
+                if (data.solicitacoes > 0) {
+                    if (badgeSol) {
+                        badgeSol.textContent = data.solicitacoes;
+                    } else {
+                        // Cria o badge se não existir
+                        const tabBtn = document.querySelector('.tab-btn[data-tab="solicitacoes"]');
+                        if (tabBtn) {
+                            const novoBadge = document.createElement('span');
+                            novoBadge.id = 'badge-solicitacoes';
+                            novoBadge.className = 'ml-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5';
+                            novoBadge.textContent = data.solicitacoes;
+                            tabBtn.appendChild(novoBadge);
+                        }
+                    }
+                } else {
+                    if (badgeSol) badgeSol.remove();
+                }
+
+                // Badge Interesses
+                const badgeInt = document.getElementById('badge-interesses');
+                if (data.interesses > 0) {
+                    if (badgeInt) {
+                        badgeInt.textContent = data.interesses;
+                    } else {
+                        const tabBtn = document.querySelector('.tab-btn[data-tab="interesses"]');
+                        if (tabBtn) {
+                            const novoBadge = document.createElement('span');
+                            novoBadge.id = 'badge-interesses';
+                            novoBadge.className = 'ml-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5';
+                            novoBadge.textContent = data.interesses;
+                            tabBtn.appendChild(novoBadge);
+                        }
+                    }
+                } else {
+                    if (badgeInt) badgeInt.remove();
+                }
+
+                // Badge Trocas
+                const badgeTro = document.getElementById('badge-trocas');
+                if (data.trocas > 0) {
+                    if (badgeTro) {
+                        badgeTro.textContent = data.trocas;
+                    } else {
+                        const tabBtn = document.querySelector('.tab-btn[data-tab="trocas"]');
+                        if (tabBtn) {
+                            const novoBadge = document.createElement('span');
+                            novoBadge.id = 'badge-trocas';
+                            novoBadge.className = 'ml-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5';
+                            novoBadge.textContent = data.trocas;
+                            tabBtn.appendChild(novoBadge);
+                        }
+                    }
+                } else {
+                    if (badgeTro) badgeTro.remove();
+                }
+            })
+            .catch(err => console.error('Erro ao buscar badges:', err));
+    }
+
+    // Também atualiza quando a página ganha foco (aba ativa)
+    document.addEventListener('visibilitychange', function() {
+        if (!document.hidden) atualizarBadges();
+    });
+</script>
 {% endblock %}

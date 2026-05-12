@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Alexandria | Erro {{ error_code }}{% endblock %}
+
+{% block content %}
+<section class="bg-white dark:bg-neutral-900 min-h-[70vh] flex items-center justify-center py-16">
+    <div class="container mx-auto px-5 text-center">
+        <div class="max-w-md mx-auto">
+            <!-- Ícone/ilustração -->
+            <div class="text-7xl md:text-8xl mb-6">
+                {% if error_code == 404 %}
+                    <i class="bi bi-binoculars text-neutral-300 dark:text-neutral-700"></i>
+                {% elif error_code == 500 %}
+                    <i class="bi bi-server text-neutral-300 dark:text-neutral-700"></i>
+                {% elif error_code == 403 %}
+                    <i class="bi bi-lock text-neutral-300 dark:text-neutral-700"></i>
+                {% elif error_code == 400 %}
+                    <i class="bi bi-exclamation-triangle text-neutral-300 dark:text-neutral-700"></i>
+                {% else %}
+                    <i class="bi bi-bug text-neutral-300 dark:text-neutral-700"></i>
+                {% endif %}
+            </div>
+
+            <!-- Código e mensagem -->
+            <h1 class="text-6xl md:text-7xl font-bold text-neutral-800 dark:text-white">
+                {{ error_code|default:"Oops!" }}
+            </h1>
+            <h2 class="text-2xl md:text-3xl font-semibold text-emerald-600 dark:text-emerald-400 mt-2">
+                {{ error_title|default:"Algo deu errado" }}
+            </h2>
+            <p class="text-neutral-600 dark:text-neutral-300 mt-4">
+                {{ error_message|default:"Desculpe, ocorreu um erro inesperado. Por favor, tente novamente mais tarde." }}
+            </p>
+
+            <!-- Ações -->
+            <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="javascript:history.back()" 
+                   class="border border-emerald-600 text-emerald-600 px-6 py-2 rounded-full hover:bg-emerald-50 transition dark:border-emerald-500 dark:text-emerald-400 dark:hover:bg-emerald-950">
+                    <i class="bi bi-arrow-left"></i> Voltar
+                </a>
+                <a href="{% url 'home' %}" 
+                   class="bg-emerald-600 text-white px-6 py-2 rounded-full hover:bg-emerald-700 transition">
+                    <i class="bi bi-house"></i> Ir para a página inicial
+                </a>
+            </div>
+
+            <!-- Detalhes técnicos (opcional, só em modo debug) -->
+            {% if debug and exception %}
+            <div class="mt-8 p-4 bg-red-50 dark:bg-red-950/30 rounded-xl text-left border border-red-200 dark:border-red-800">
+                <p class="text-sm font-mono text-red-700 dark:text-red-300">
+                    <strong>Detalhes técnicos (modo debug):</strong><br>
+                    {{ exception }}
+                </p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

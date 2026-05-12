@@ -5,71 +5,99 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="bg-gradient-to-br from-emerald-50 via-white to-gray-100 py-16 md:py-24">
+<section class="bg-emerald-50 py-16 md:py-24 dark:bg-emerald-950" aria-labelledby="hero-heading">
     <div class="container mx-auto px-5 text-center">
-        <h1 class="text-3xl md:text-5xl font-bold text-gray-800">
-            Explore o <span class="text-emerald-600">acervo colaborativo</span>
+        <h1 id="hero-heading" class="text-3xl md:text-5xl font-bold text-neutral-800 dark:text-white">
+            Explore o <span class="text-emerald-600 dark:text-emerald-400">acervo colaborativo</span>
         </h1>
-        <p class="text-gray-600 mt-4 max-w-2xl mx-auto">
-            Livros disponíveis para troca ou doação em São Paulo e Grande SP. Use os filtros para encontrar o que mais combina com você.
+        <p class="text-neutral-600 dark:text-neutral-300 mt-4 max-w-2xl mx-auto">
+            Livros disponíveis para troca ou doação em São Paulo e Grande SP. Use os filtros para encontrar o que mais
+            combina com você.
         </p>
     </div>
 </section>
 
 <!-- Filtros -->
-<section class="py-8 bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
+<section
+    class="py-8 bg-white border-b border-neutral-200 sticky top-0 z-10 shadow-sm dark:bg-neutral-800 dark:border-neutral-700"
+    aria-label="Filtros de busca">
     <div class="container mx-auto px-5">
         <form method="get" class="flex flex-col md:flex-row gap-4 items-end justify-between">
             <!-- Busca -->
             <div class="w-full md:w-1/3">
-                <label for="search" class="block text-sm font-medium text-gray-700 mb-1 text-center">Buscar livro</label>
+                <label for="search"
+                    class="block text-sm font-medium text-neutral-700 mb-1 text-center dark:text-neutral-300">
+                    Buscar livro
+                </label>
                 <div class="relative">
-                    <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    <i class="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-neutral-400 dark:text-neutral-500"
+                        aria-hidden="true"></i>
                     <input type="text" name="search" id="search" value="{{ filtros.search }}"
-                           placeholder="Título, autor..." 
-                           class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-2xl focus:ring-emerald-500">
+                        placeholder="Título, autor..."
+                        class="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-2xl focus:ring-emerald-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white dark:placeholder-neutral-400"
+                        aria-label="Buscar por título ou autor">
                 </div>
             </div>
 
             <!-- Região -->
             <div class="w-full md:w-auto">
-                <label for="regiao" class="block text-sm font-medium text-gray-700 mb-1 text-center">Região</label>
-                <select name="regiao" id="regiao" class="border border-gray-300 rounded-2xl px-4 py-2 pr-8">
+                <label for="regiao"
+                    class="block text-sm font-medium text-neutral-700 mb-1 text-center dark:text-neutral-300">
+                    Região
+                </label>
+                <select name="regiao" id="regiao"
+                    class="border border-neutral-300 rounded-2xl px-4 py-2 pr-8 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white"
+                    aria-label="Filtrar por região">
                     <option value="">Todas as regiões</option>
                     {% for cod, nome in regioes %}
-                        <option value="{{ cod }}" {% if filtros.regiao == cod %}selected{% endif %}>{{ nome }}</option>
+                    <option value="{{ cod }}" {% if filtros.regiao  ==  cod %}selected{% endif %}>{{ nome }}</option>
                     {% endfor %}
                 </select>
             </div>
 
             <!-- Estado de conservação -->
             <div class="w-full md:w-auto">
-                <label for="estado" class="block text-sm font-medium text-gray-700 mb-1 text-center">Estado</label>
-                <select name="estado" id="estado" class="border border-gray-300 rounded-2xl px-4 py-2 pr-8">
+                <label for="estado"
+                    class="block text-sm font-medium text-neutral-700 mb-1 text-center dark:text-neutral-300">
+                    Estado
+                </label>
+                <select name="estado" id="estado"
+                    class="border border-neutral-300 rounded-2xl px-4 py-2 pr-8 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white"
+                    aria-label="Filtrar por estado de conservação">
                     <option value="">Todos</option>
                     <option value="OTIMO" {% if filtros.estado == 'OTIMO' %}selected{% endif %}>Ótimo</option>
                     <option value="BOM" {% if filtros.estado == 'BOM' %}selected{% endif %}>Bom</option>
                     <option value="NORMAL" {% if filtros.estado == 'NORMAL' %}selected{% endif %}>Normal</option>
-                    <option value="DANIFICADO" {% if filtros.estado == 'DANIFICADO' %}selected{% endif %}>Danificado</option>
+                    <option value="DANIFICADO" {% if filtros.estado == 'DANIFICADO' %}selected{% endif %}>Danificado
+                    </option>
                 </select>
             </div>
 
             <!-- Tipo (troca/doação) -->
             <div class="w-full md:w-auto">
-                <label for="tipo" class="block text-sm font-medium text-gray-700 mb-1 text-center">Tipo</label>
-                <select name="tipo" id="tipo" class="border border-gray-300 rounded-2xl px-4 py-2 pr-8">
+                <label for="tipo"
+                    class="block text-sm font-medium text-neutral-700 mb-1 text-center dark:text-neutral-300">
+                    Tipo
+                </label>
+                <select name="tipo" id="tipo"
+                    class="border border-neutral-300 rounded-2xl px-4 py-2 pr-8 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white"
+                    aria-label="Filtrar por tipo de transação">
                     <option value="">Todos</option>
                     <option value="troca" {% if filtros.tipo == 'troca' %}selected{% endif %}>Para troca</option>
                     <option value="doacao" {% if filtros.tipo == 'doacao' %}selected{% endif %}>Para doação</option>
                 </select>
             </div>
 
-            <button type="submit" class="bg-emerald-600 text-white px-6 py-2 rounded-2xl hover:bg-emerald-700 transition">
-                <i class="bi bi-funnel"></i>
+            <button type="submit"
+                class="bg-emerald-600 text-white px-6 py-2 rounded-2xl hover:bg-emerald-700 transition dark:bg-emerald-700 dark:hover:bg-emerald-600"
+                aria-label="Aplicar filtros">
+                <i class="bi bi-funnel" aria-hidden="true"></i>
                 Filtrar
             </button>
-            <a href="{% url 'explorar' %}" class="text-emerald-600 hover:text-emerald-800 text-sm font-medium px-6 py-2">
-                <i class="bi bi-x-octagon"></i>
+            <a href="{% url 'explorar' %}"
+                class="text-emerald-600 hover:text-emerald-800 text-sm font-medium px-6 py-2 dark:text-emerald-400 dark:hover:text-emerald-300"
+                aria-label="Limpar todos os filtros">
+                <i class="bi bi-x-octagon" aria-hidden="true"></i>
                 Limpar filtros
             </a>
         </form>
@@ -77,64 +105,102 @@
 </section>
 
 <!-- Grid de livros -->
-<section class="py-12 bg-gray-50">
+<section class="py-12 bg-neutral-50 dark:bg-neutral-900" aria-labelledby="results-heading">
     <div class="container mx-auto px-5">
         <div class="flex justify-between items-center mb-6">
-            <p class="text-gray 500 text-sm">{{ livros|length }}
-                {% if livros|length > 1 %}
+            <p class="text-neutral-500 text-sm dark:text-neutral-400" id="results-heading">
+                {{ livros|length }}
+                    {% if livros|length > 1 %}
                     Livros encontrados
-                {% else %}
+                    {% else %}
                     Livro encontrado
-                {% endif %}</p>
+                    {% endif %}
+            </p>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {% for livro in livros %}
-            <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-smooth flex flex-col">
+            <article
+                class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-smooth flex flex-col dark:bg-neutral-800">
                 <div class="h-48 overflow-hidden">
-                    <img src="{{ livro.capa_url|default:'/static/images/no-cover.png' }}" 
-                         alt="{{ livro.titulo }}"
-                         class="w-full h-full object-cover"
-                         onerror="this.src='/static/images/no-cover.png'">
+                    {% load static %}
+                    <img src="{{ livro.capa_url|default:'/static/images/noCover.png' }}"
+                        alt="Capa do livro: {{ livro.titulo|default:'Título indisponível' }}"
+                        class="w-full h-full object-cover" onerror="this.src='/static/images/noCover.png'"
+                        loading="lazy">
                 </div>
                 <div class="p-4 flex-1 flex flex-col">
-                    <h3 class="font-bold text-lg text-gray-800">{{ livro.titulo|default:"Título indisponível" }}</h3>
-                    <p class="text-sm text-gray-500">{{ livro.autor|default:"Autor desconhecido" }}</p>
+                    <h3 class="font-bold text-lg text-neutral-800 dark:text-white">{{ livro.titulo|default_if_none:""|default:"Título indisponível" }}</h3>
+                    <p class="text-sm text-neutral-500 dark:text-neutral-400">{{ livro.autor }}</p>
                     <div class="flex flex-wrap gap-2 mt-2">
-                        <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-2xl">{{ livro.get_estado_display }}</span>
+                        <span
+                            class="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-2xl dark:bg-emerald-900 dark:text-emerald-300">
+                            {{ livro.get_estado_display }}
+                        </span>
                         {% if livro.em_doacao %}
-                            <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-2xl">Para doação</span>
+                        <span
+                            class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-2xl dark:bg-blue-900 dark:text-blue-300">
+                            Para doação
+                        </span>
                         {% else %}
-                            <span class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-2xl">Para troca</span>
+                        <span
+                            class="text-xs bg-amber-100 text-amber-800 px-2 py-1 rounded-2xl dark:bg-amber-900 dark:text-amber-300">
+                            Para troca
+                        </span>
                         {% endif %}
                     </div>
-                    <p class="text-sm text-gray-600 mt-2 line-clamp-3">{{ livro.sinopse|truncatewords:20 }}</p>
-                    <a class="mt-4 bg-emerald-600 font-bold py-2 text-center rounded-2xl hover:bg-emerald-700 transition text-md font-medium cursor-pointer text-white">
+                    <p class="text-sm text-neutral-600 mt-2 line-clamp-3 dark:text-neutral-300">
+                        {{ livro.sinopse|truncatewords:20 }}
+                    </p>
+                    <a href="{% url 'detalhe_livro' livro.id %}"
+                        class="mt-4 bg-emerald-600 font-bold py-2 text-center rounded-2xl hover:bg-emerald-700 transition text-md font-medium cursor-pointer text-white dark:bg-emerald-700 dark:hover:bg-emerald-600"
+                        aria-label="Ver detalhes do livro {{ livro.titulo|default:'sem título' }}">
                         Ver o livro
                     </a>
                 </div>
-            </div>
+            </article>
             {% empty %}
             <div class="col-span-full text-center py-16">
-                <i class="bi bi-emoji-frown text-6xl text-gray-300"></i>
-                <p class="text-gray-500 mt-4">Nenhum livro encontrado com os filtros selecionados.</p>
-                <a href="{% url 'explorar' %}" class="mt-4 inline-block text-emerald-600 underline">Limpar filtros</a>
+                <i class="bi bi-emoji-frown text-6xl text-neutral-300 dark:text-neutral-600" aria-hidden="true"></i>
+                <p class="text-neutral-500 mt-4 dark:text-neutral-400">Nenhum livro encontrado com os filtros
+                    selecionados.</p>
+                <a href="{% url 'explorar' %}"
+                    class="mt-4 inline-block text-emerald-600 underline dark:text-emerald-400">
+                    Limpar filtros
+                </a>
             </div>
             {% endfor %}
         </div>
 
         <!-- Paginação (opcional) -->
         {% if page_obj.has_other_pages %}
-        <div class="flex justify-center mt-8 gap-2">
+        <nav class="flex justify-center mt-8 gap-2" aria-label="Navegação de páginas">
             {% if page_obj.has_previous %}
-                <a href="?page=1{{ request.GET.urlencode|cut:'page=' }}" class="px-3 py-1 border rounded">«</a>
+            <a href="?page=1{{ request.GET.urlencode|cut:'page=' }}"
+                class="px-3 py-1 border rounded dark:border-neutral-700 dark:text-neutral-300"
+                aria-label="Primeira página">
+                «
+            </a>
             {% endif %}
-            <span class="px-3 py-1 bg-emerald-600 text-white rounded">{{ page_obj.number }}</span>
+            <span class="px-3 py-1 bg-emerald-600 text-white rounded dark:bg-emerald-700">
+                {{ page_obj.number }}
+            </span>
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}" class="px-3 py-1 border rounded">»</a>
+            <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
+                class="px-3 py-1 border rounded dark:border-neutral-700 dark:text-neutral-300"
+                aria-label="Próxima página">
+                »
+            </a>
             {% endif %}
-        </div>
+        </nav>
         {% endif %}
     </div>
 </section>
+
+<div>
+        <a href="{% url 'adicionar_livro' %}" class="fixed bottom-6 right-6 bg-emerald-600 text-white p-3 rounded-full shadow-lg hover:bg-emerald-700 transition z-20">
+            <i class="bi bi-plus-lg text-xl"></i> Adicionar um livro
+        </a>
+</div>
+
 {% endblock %}

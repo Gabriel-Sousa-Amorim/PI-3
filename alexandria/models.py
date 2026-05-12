@@ -8,6 +8,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 
+import alexandria.constants as app_constants
+
 import requests
 import datetime
 
@@ -34,33 +36,39 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
     """
     id = models.AutoField(primary_key=True)
     # Campos da tabela original
-    nome = models.CharField(max_length=256, verbose_name='Nome completo do usuário')
-    email = models.EmailField(max_length=256, unique=True, verbose_name='E‑mail único por usuário')
-    regiao = models.CharField(
-        max_length=30,
-        choices=[
-            ('NORTE 1', 'NORTE 1'),
-            ('NORTE 2', 'NORTE 2'),
-            ('LESTE 1', 'LESTE 1'),
-            ('LESTE 2', 'LESTE 2'),
-            ('SUL', 'SUL'),
-            ('SUDESTE', 'SUDESTE'),
-            ('SUDOESTE', 'SUDOESTE'),
-            ('OESTE', 'OESTE'),
-            ('CENTRO', 'CENTRO'),
-            ('REGIAO METROPOLITANA', 'REGIAO METROPOLITANA'),
-        ],  # suas escolhas
-        verbose_name='Região na cidade de São Paulo'
+    nome = models.CharField(max_length=255, verbose_name='Nome completo do usuário')
+    email = models.EmailField(max_length=255, unique=True, verbose_name='E‑mail único por usuário')
+    regiao = models.CharField(max_length=255, choices=app_constants.REGIONS_CHOICES, verbose_name='Região', default=None, db_column="regiao")
+    estado = models.CharField(
+        max_length=2, 
+        choices=app_constants.STATE_CHOICES, 
+        verbose_name='Estado de Residência', 
+        blank=True,
+        null=True
     )
     cidade = models.CharField(max_length=50, default='São Paulo')
+    zona = models.CharField(
+        max_length=1,
+        choices=[
+            ('N', 'Norte'),
+            ('L', 'Leste'),
+            ('S', 'Sul'),
+            ('O', 'Oeste'),
+            ('C', 'Central'),
+            ('X', 'Outras'),
+        ],  # suas escolhas
+        verbose_name='Zona na cidade de residência',
+        db_column="zona",
+        null=True
+    )
     password = models.CharField(max_length=128, db_column='senha', verbose_name='Senha')
     joined_at = models.DateTimeField(default=datetime.datetime.now, blank=True)
     # Campo de avaliação (rating) - de 0 a 5
-    rating = models.FloatField(
+    confiability = models.FloatField(
         null=True,  
         blank=True,
-        verbose_name='Avaliação',
-        help_text='Avaliação de 0 a 5 estrelas. Se nulo, significa não avaliado.'
+        verbose_name='Confiabilidade',
+        help_text='Avaliação de confiabilidade 0 a 5 estrelas. Se nulo, significa não avaliado.'
     )
     # Seus campos booleanos personalizados
     moderador = models.BooleanField(db_column='moderador', default=False)
@@ -100,10 +108,10 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
         return self.ativo
 
     def get_rating_display(self):
-        """Retorna string para exibição da avaliação"""
-        if self.rating is None:
+        """Retorna string para exibição da avaliação (confiability)"""
+        if self.confiability is None:
             return "Não avaliado"
-        return f"{self.rating:.1f} / 5.0"
+        return f"{self.confiability:.1f} / 5.0"
 
     # Permissões personalizadas (opcional)
     def has_perm(self, perm, obj=None):
@@ -116,6 +124,20 @@ class Usuario(AbstractBaseUser, PermissionsMixin):
 
     def has_module_perms(self, app_label):
         return self.administrador or self.moderador
+
+    def get_regiao_display_full(self):
+        return app_constants.REGIONS.get(self.regiao, {}).get("label", self.regiao)
+
+    def get_estado_display_full(self):
+        return dict(app_constants.STATE_CHOICES).get(self.estado, self.estado)
+
+    def get_zona_display_full(self):
+        zonas = dict(self._meta.get_field('zona').choices)
+        return zonas.get(self.zona, self.zona or 'Não informada')
+
+    @property
+    def states_for_region(self):
+        return app_constants.REGIONS.get(self.regiao, {}).get("states", [])
 
 class Livro(models.Model):
     ESTADO_CHOICES = [
@@ -133,7 +155,8 @@ class Livro(models.Model):
         max_length=50, 
         null=True, 
         blank=True, 
-        verbose_name='OLID (OpenLibrary ID)'
+        verbose_name='OLID (OpenLibrary ID)',
+        unique=False
     )
     
     # Campos de cache da API
@@ -143,7 +166,7 @@ class Livro(models.Model):
     sinopse = models.TextField(blank=True, null=True, verbose_name='Sinopse')
     
     # Campos originais
-    estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, verbose_name='Estado de conservação')
+    estado = models.CharField(max_length=10, choices=ESTADO_CHOICES, verbose_name='Estado de conservação', db_column='estado', null=True)
     disponivel = models.BooleanField(default=True, verbose_name='Disponível para troca')
     em_doacao = models.BooleanField(default=False, verbose_name='Disponível para doação')
 
@@ -198,6 +221,7 @@ class Livro(models.Model):
         return context
 
     def populate_with_api(self):
+        print(f"🔁 Chamando populate_with_api para livro {self.id}, cod_api={self.cod_api}")
         raw_olid = self.cod_api.strip()
         tamanho_capa = "M"
         # Remove prefixo '/works/' ou '/books/' se existir
@@ -331,9 +355,9 @@ class Livro(models.Model):
             print(resp_capa)
             if resp_capa.status_code >= 400:
                 print(f"⚠️ Capa não encontrada (status {resp_capa.status_code})")
-                self.capa_url = '/static/images/no-cover.png'
+                self.capa_url = '/static/images/noCover.png'
         except Exception:
-            self.capa_url = '/static/images/no-cover.png'
+            self.capa_url = '/static/images/noCover.png'
 
         # Salvar campos
         self.titulo = titulo
@@ -346,57 +370,39 @@ class Livro(models.Model):
     def __str__(self):
         return self.titulo or f'Livro {self.id}'
 
-class Interesse(models.Model):
-    id_usuario = models.ForeignKey(
-        Usuario, 
-        on_delete=models.CASCADE, 
-        db_column='id_usuario',
-        verbose_name='Usuário interessado'
-    )
-    id_livro = models.ForeignKey(
-        Livro, 
-        on_delete=models.CASCADE, 
-        db_column='id_livro',
-        verbose_name='Livro de interesse'
-    )
-    data_interesse = models.DateTimeField(default=timezone.now, verbose_name='Quando o interesse foi registrado')
+class Interesses(models.Model):
+    STATUS_CHOICES = [
+        ('P', 'Pendente'),
+        ('A', 'Aceito'),
+        ('R', 'Recusado'),
+    ]
+    id_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    id_livro = models.ForeignKey(Livro, on_delete=models.CASCADE)
+    data_interesse = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='P')
+    data_atualizacao = models.DateTimeField(auto_now=True)
 
     class Meta:
-        db_table = 'interesses'
-        constraints = [
-            models.UniqueConstraint(fields=['id_usuario', 'id_livro'], name='unique_interesse')
-        ]
+        db_table = 'interesse'
         verbose_name = 'Interesse'
-        verbose_name_plural = 'Interesses'
-
-    def __str__(self):
-        return f'{self.id_usuario.nome} interessado em {self.id_livro.id}'
-
+        verbose_name_plural = 'interesses'
+        unique_together = ('id_usuario', 'id_livro')  
 
 class Troca(models.Model):
-    id = models.AutoField(primary_key=True, verbose_name='Identificador único da troca')
-    id_dono = models.ForeignKey(
-        Usuario, 
-        on_delete=models.CASCADE, 
-        related_name='trocas_como_dono',
-        db_column='id_dono',
-        verbose_name='Dono do livro'
+    STATUS_CHOICES = (
+        ('E', 'Em andamento'),
+        ('C', 'Concluída'),
+        ('D', 'Desistida'),
     )
-    id_interessado = models.ForeignKey(
-        Usuario, 
-        on_delete=models.CASCADE, 
-        related_name='trocas_como_interessado',
-        db_column='id_interessado',
-        verbose_name='Interessado no livro'
-    )
-    id_livro = models.ForeignKey(
-        Livro, 
-        on_delete=models.CASCADE, 
-        db_column='id_livro',
-        verbose_name='Livro em transação'
-    )
-    data_troca = models.DateField(default=timezone.now, verbose_name='Data da troca')
-
+    livro = models.ForeignKey(Livro, on_delete=models.CASCADE, null=True)
+    id_dono = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='trocas_como_dono')
+    id_interessado = models.ForeignKey(Usuario, on_delete=models.CASCADE, related_name='trocas_como_interessado')
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='E')
+    data_troca = models.DateTimeField(auto_now_add=True)
+    avaliacao_dono = models.PositiveSmallIntegerField(null=True, blank=True)  # nota para o interessado
+    avaliacao_interessado = models.PositiveSmallIntegerField(null=True, blank=True)  # nota para o dono
+    comentario_dono = models.TextField(blank=True)
+    comentario_interessado = models.TextField(blank=True)
     class Meta:
         db_table = 'troca'
         verbose_name = 'Troca'

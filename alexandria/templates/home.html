@@ -5,88 +5,63 @@
 
 {% block content %}
 
-<!-- Mensagens de feedback -->
-<section class="bg-gradient-to-br from-emerald-50 via-white to-gray-100 py-2">
-    {% if messages %}
-    <div class="mx-8 my-2 flex flex-col gap-5">
-        {% for message in messages %}
-        <div
-        class="p-4 rounded-2xl {% if message.tags == 'error' %}bg-red-50 text-red-700 border border-red-200{% elif message.tags == 'success' %}bg-green-50 text-green-700 border border-green-200{% else %}bg-blue-50 text-blue-700 border border-blue-200{% endif %}">
-        <i
-        class="bi {% if message.tags == 'error' %}bi-exclamation-triangle{% elif message.tags == 'success' %}bi-check-circle{% else %}bi-info-circle{% endif %} mr-2"></i>
-        {{ message }}
-    </div>
-    {% endfor %}
-</div>
-{% endif %}
+    
+
 
 <!-- Hero Section -->
-<div class="py-20 md:py-28">
-    <div class="container mx-auto px-5 text-center md:text-left md:flex md:items-center md:justify-between">
+<section class="bg-gradient-to-br from-emerald-50 via-white to-gray-100 pt-5">
+    <div class="container mx-auto px-5 text-center md:text-left md:flex md:items-center md:justify-between py-20 md:py-28">
         <div class="md:w-1/2 space-y-6">
             <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800">
-                Encontre meios para <br> <span class="text-emerald-600">doar, trocar ou obter</span>, <br> livros <span
-                class="text-emerald-600">do seu interesse!</span>
+                Encontre meios para <br> <span class="text-emerald-600">doar, trocar ou obter</span>, <br> livros <span class="text-emerald-600">do seu Interesses!</span>
             </h1>
             <p class="text-lg text-gray-600 max-w-lg mx-auto md:mx-0">
-                Um pequeno projeto que visa conectar partes interessadas para doação e troca de livros na cidade de São
-                Paulo e região metropolitana.
+                Um pequeno projeto que visa conectar partes interessadas para doação e troca de livros na cidade de São Paulo e região metropolitana.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <a href="{% url 'explorar' %}"
-                    class="bg-emerald-600 text-white px-8 py-3 rounded-2xl font-semibold shadow-lg hover:bg-emerald-700 transition-smooth text-center">Quero
-                    trocar livros</a>
-                    <a href="{% url 'como-funciona' %}"
-                    class="border border-emerald-300 text-emerald-700 px-8 py-3 rounded-2xl font-semibold hover:bg-emerald-50 transition-smooth text-center">Saiba
-                    mais</a>
-                </div>
-                <!--<p class="text-sm text-gray-500">12 regiões de SP</p>-->
+                <a href="{% url 'explorar' %}" class="bg-emerald-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-emerald-700 transition-smooth text-center">Quero trocar livros</a>
+                <a href="{% url 'como-funciona' %}" class="border border-emerald-300 text-emerald-700 px-8 py-3 rounded-full font-semibold hover:bg-emerald-50 transition-smooth text-center">Saiba mais</a>
             </div>
-            <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center">
-                <img src="https://images.unsplash.com/photo-1610116306796-6fea9f4fae38?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="Ilustração de livros" class="rounded-2xl shadow-xl">
-            </div>
+            <!--<p class="text-sm text-gray-500">12 regiões de SP</p>-->
+        </div>
+        <div class="md:w-1/2 mt-12 md:mt-0 flex justify-center">
+            <img src="https://images.unsplash.com/photo-1610116306796-6fea9f4fae38?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ilustração de livros" class="rounded-2xl shadow-xl">
         </div>
     </div>
 </section>
-    
+
 <!-- Cards de Regiões -->
 <section class="py-16 bg-white">
     <div class="container mx-auto px-5">
         <div class="text-center max-w-2xl mx-auto mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Explore por <span
-                    class="text-emerald-600">região</span></h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Explore por <span class="text-emerald-600">região</span></h2>
             <p class="text-gray-500 mt-2">Livros perto de você, em São Paulo e Grande SP.</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             <!-- Card 1 -->
-            <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-smooth">
+            <div class="bg-gray-50 rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-smooth">
                 <div class="text-3xl mb-3">📍</div>
                 <h3 class="font-bold text-xl">Zona Norte</h3>
                 <p class="text-gray-500 text-sm mt-1">Santana, Casa Verde, Fregesia do ó...</p>
-                <a href="{% url 'livros-por-regiao' regiao='NORTE' %}"
-                    class="text-emerald-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
+                <a href="{% url 'explorar' %}?regiao='NORTE'" class="text-emerald-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
             </div>
-            <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-smooth">
+            <div class="bg-gray-50 rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-smooth">
                 <div class="text-3xl mb-3">📍</div>
                 <h3 class="font-bold text-xl">Zona Sul</h3>
                 <p class="text-gray-500 text-sm mt-1">Sacomã, Moema, Brooklin, Santo Amaro...</p>
-                <a href="{% url 'livros-por-regiao' regiao='SUL' %}"
-                    class="text-emerald-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
+                <a href="{% url 'explorar' %}?regiao='SUL'" class="text-emerald-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
             </div>
-            <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-smooth">
+            <div class="bg-gray-50 rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-smooth">
                 <div class="text-3xl mb-3">📍</div>
                 <h3 class="font-bold text-xl">Zona Leste</h3>
                 <p class="text-gray-500 text-sm mt-1">Tatuapé, Itaquera, Penha...</p>
-                <a href="{% url 'livros-por-regiao' regiao='LESTE' %}"
-                    class="text-emerald-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
+                <a href="{% url 'explorar' %}?regiao='LESTE'" class="text-emerald-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
             </div>
-            <div class="bg-gray-50 rounded-2xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-smooth">
+            <div class="bg-gray-50 rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-smooth">
                 <div class="text-3xl mb-3">📍</div>
                 <h3 class="font-bold text-xl">Zona Oeste</h3>
                 <p class="text-gray-500 text-sm mt-1">Butantã, Lapa, Pinheiros...</p>
-                <a href="{% url 'livros-por-regiao' regiao='OESTE' %}"
-                    class="text-emerald-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
+                <a href="{% url 'explorar' %}?regiao='OESTE'" class="text-emerald-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
             </div>
         </div>
     </div>
@@ -101,44 +76,21 @@
         </div>
         <div class="grid md:grid-cols-3 gap-8 text-center">
             <div class="bg-white p-6 rounded-2xl shadow-sm">
-                <div
-                    class="text-4xl bg-emerald-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto text-emerald-700">
-                    1</div>
+                <div class="text-4xl bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-emerald-700">1</div>
                 <h3 class="font-bold text-xl mt-4">Cadastre seus livros</h3>
                 <p class="text-gray-500 mt-2">Adicione os livros que você quer doar ou trocar e suas informações.</p>
             </div>
             <div class="bg-white p-6 rounded-2xl shadow-sm">
-                <div
-                    class="text-4xl bg-emerald-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto text-emerald-700">
-                    2</div>
+                <div class="text-4xl bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-emerald-700">2</div>
                 <h3 class="font-bold text-xl mt-4">Encontre interessados</h3>
                 <p class="text-gray-500 mt-2">Enquanto espera por interessados, explore o catálogo.</p>
             </div>
             <div class="bg-white p-6 rounded-2xl shadow-sm">
-                <div
-                    class="text-4xl bg-emerald-100 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto text-emerald-700">
-                    3</div>
+                <div class="text-4xl bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-emerald-700">3</div>
                 <h3 class="font-bold text-xl mt-4">Combine e troque</h3>
                 <p class="text-gray-500 mt-2">Marque um ponto de encontro e compartilhe histórias.</p>
             </div>
         </div>
     </div>
 </section>
-
-<!-- Depoimento 
-<section class="py-16 bg-white">
-    <div class="container mx-auto px-5 max-w-4xl">
-        <div class="bg-gray-50 rounded-2xl p-8 md:p-12 shadow-sm border-l-8 border-emerald-500">
-            <p class="text-xl md:text-2xl italic text-gray-700">"Troquei 5 livros no último mês e conheci pessoas incríveis. A Alexandria transformou minha estante em uma ponte de conexões."</p>
-            <div class="flex items-center gap-4 mt-6">
-                <div class="w-12 h-12 bg-emerald-200 rounded-2xl flex items-center justify-center text-emerald-800 font-bold text-xl">A</div>
-                <div>
-                    <p class="font-bold">Ana Carolina</p>
-                    <p class="text-sm text-gray-500">Leitora ávida • Zona Sul</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
--->
 {% endblock %}

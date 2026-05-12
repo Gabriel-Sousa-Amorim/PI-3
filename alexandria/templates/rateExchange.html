@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Avaliar Troca | Alexandria{% endblock %}
+
+{% block content %}
+<section class="py-12 bg-neutral-50 min-h-screen">
+    <div class="container mx-auto px-5 max-w-2xl">
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+            <div class="bg-emerald-600 px-6 py-4">
+                <h1 class="text-2xl font-bold text-white">Avaliar Troca</h1>
+            </div>
+            
+            <div class="p-6">
+                <!-- Informações da troca -->
+                <div class="flex gap-4 mb-6 pb-4 border-b">
+                    <img src="{{ troca.livro.capa_url|default:'/static/images/noCover.png' }}" 
+                         alt="{{ troca.livro.titulo }}"
+                         class="w-20 h-24 object-cover rounded-lg">
+                    <div>
+                        <h2 class="font-bold text-lg">{{ troca.livro.titulo }}</h2>
+                        <p class="text-sm text-gray-600">{{ troca.livro.autor }}</p>
+                        <p class="text-xs text-gray-500 mt-1">
+                            Troca realizada em {{ troca.data_troca|date:"d/m/Y" }}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Quem está sendo avaliado -->
+                <div class="mb-6">
+                    <p class="text-gray-700">
+                        Você está avaliando a experiência com 
+                        <strong>{{ avaliado.nome }}</strong>.
+                    </p>
+                    <p class="text-sm text-gray-500 mt-1">
+                        Sua avaliação ajuda a comunidade a confiar em outros leitores.
+                    </p>
+                </div>
+
+                <!-- Formulário de avaliação -->
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Sua nota (1 a 5)</label>
+                        <div class="flex gap-1 text-3xl" id="star-rating">
+                            <span data-value="1" class="cursor-pointer text-gray-400 hover:text-yellow-500 transition">☆</span>
+                            <span data-value="2" class="cursor-pointer text-gray-400 hover:text-yellow-500 transition">☆</span>
+                            <span data-value="3" class="cursor-pointer text-gray-400 hover:text-yellow-500 transition">☆</span>
+                            <span data-value="4" class="cursor-pointer text-gray-400 hover:text-yellow-500 transition">☆</span>
+                            <span data-value="5" class="cursor-pointer text-gray-400 hover:text-yellow-500 transition">☆</span>
+                        </div>
+                        {{ form.nota }}  <!-- campo hidden -->
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Comentário (opcional)</label>
+                        {{ form.comentario }}
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="{% url 'perfil' %}" class="flex-1 text-center px-4 py-2 border border-gray-300 rounded-xl hover:bg-gray-50 transition">
+                            Cancelar
+                        </a>
+                        <button type="submit" class="flex-1 bg-emerald-600 text-white px-4 py-2 rounded-xl hover:bg-emerald-700 transition">
+                            Enviar avaliação
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Lógica das estrelas
+    const stars = document.querySelectorAll('#star-rating span');
+    const notaInput = document.querySelector('input[name="nota"]');
+    
+    function highlightStars(valor) {
+        stars.forEach((star, idx) => {
+            if (idx < valor) star.innerHTML = '★';
+            else star.innerHTML = '☆';
+            star.classList.remove('text-yellow-500');
+            if (idx < valor) star.classList.add('text-yellow-500');
+            else star.classList.add('text-gray-400');
+        });
+        notaInput.value = valor;
+    }
+    
+    stars.forEach(star => {
+        star.addEventListener('click', () => {
+            const valor = parseInt(star.getAttribute('data-value'));
+            highlightStars(valor);
+        });
+        star.addEventListener('mouseenter', () => {
+            const valor = parseInt(star.getAttribute('data-value'));
+            stars.forEach((s, idx) => {
+                if (idx < valor) s.innerHTML = '★';
+                else s.innerHTML = '☆';
+            });
+        });
+        star.addEventListener('mouseleave', () => {
+            const valorAtual = parseInt(notaInput.value) || 3;
+            highlightStars(valorAtual);
+        });
+    });
+    
+    // Inicializa com 3 estrelas como padrão
+    if (!notaInput.value) highlightStars(3);
+</script>
+{% endblock %}
