@@ -6,13 +6,13 @@
 {% block content %}
 
 <!-- Hero Section do Perfil -->
-<section class="bg-gradient-to-br from-emerald-50 via-white to-neutral-100 py-12 md:py-16">
+<section class="bg-gradient-to-br from-indigo-50 via-white to-neutral-100 py-12 md:py-16">
     <div class="container mx-auto px-5">
         <div class="max-w-5xl mx-auto">
             <div class="flex flex-col md:flex-row gap-6 items-center md:items-start">
                 <!-- Avatar -->
                 <div class="relative">
-                    <div class="w-32 h-32 bg-gradient-to-br from-emerald-600 to-emerald-400 rounded-2xl flex items-center justify-center shadow-lg">
+                    <div class="w-32 h-32 bg-gradient-to-br from-indigo-600 to-indigo-400 rounded-2xl flex items-center justify-center shadow-lg">
                         <span class="text-5xl text-white font-bold">{{ user.nome|make_list|first|upper }}</span>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                                 {{ user.confiability }}
                             {% endif %}
                         </span>
-                        <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm">
+                        <span class="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm">
                             <i class="bi bi-geo-alt-fill"></i> {{user.cidade}} - {{ user.estado }}
                         </span>
                         <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm">
@@ -61,11 +61,11 @@
 <section class="bg-white border-b border-neutral-200 sticky top-0 z-10 shadow-sm">
     <div class="container mx-auto px-5">
         <div class="flex overflow-x-auto justify-center md:justify-start gap-1">
-            <button class="tab-btn active px-6 py-3 text-neutral-700 font-medium border-b-2 border-emerald-600 hover:text-emerald-600 transition" data-tab="livros">
+            <button class="tab-btn active px-6 py-3 text-neutral-700 font-medium border-b-2 border-indigo-600 hover:text-indigo-600 transition" data-tab="livros">
                 <i class="bi bi-book"></i> Meus Livros
             </button>
                         <!-- Aba Solicitações -->
-            <button class="tab-btn px-6 py-3 text-neutral-700 font-medium border-b-2 border-transparent hover:text-emerald-600 transition" data-tab="solicitacoes">
+            <button class="tab-btn px-6 py-3 text-neutral-700 font-medium border-b-2 border-transparent hover:text-indigo-600 transition" data-tab="solicitacoes">
                 <i class="bi bi-bell"></i> Solicitações
                 {% if solicitacoes_pendentes_count > 0 %}
                 <span id="badge-solicitacoes" class="ml-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
@@ -75,7 +75,7 @@
             </button>
 
             <!-- Aba Interesses -->
-            <button class="tab-btn px-6 py-3 text-neutral-700 font-medium border-b-2 border-transparent hover:text-emerald-600 transition" data-tab="interesses">
+            <button class="tab-btn px-6 py-3 text-neutral-700 font-medium border-b-2 border-transparent hover:text-indigo-600 transition" data-tab="interesses">
                 <i class="bi bi-heart"></i> Interesses
                 {% if interesses_pendentes_count > 0 %}
                 <span id="badge-interesses" class="ml-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
@@ -85,7 +85,7 @@
             </button>
 
             <!-- Aba Trocas -->
-            <button class="tab-btn px-6 py-3 text-neutral-700 font-medium border-b-2 border-transparent hover:text-emerald-600 transition" data-tab="trocas">
+            <button class="tab-btn px-6 py-3 text-neutral-700 font-medium border-b-2 border-transparent hover:text-indigo-600 transition" data-tab="trocas">
                 <i class="bi bi-arrow-left-right"></i> Trocas
                 {% if trocas_andamento_count > 0 %}
                 <span id="badge-trocas" class="ml-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5">
@@ -93,7 +93,7 @@
                 </span>
                 {% endif %}
             </button>
-            <button class="tab-btn px-6 py-3 text-neutral-700 font-medium border-b-2 border-transparent hover:text-emerald-600 transition" data-tab="config">
+            <button class="tab-btn px-6 py-3 text-neutral-700 font-medium border-b-2 border-transparent hover:text-indigo-600 transition" data-tab="config">
                 <i class="bi bi-gear"></i> Configurações
             </button>
         </div>
@@ -108,7 +108,7 @@
         <div id="tab-livros" class="tab-content active">
             <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
                 <h2 class="text-2xl font-bold text-neutral-800">
-                    <i class="bi bi-book text-emerald-600"></i> Meus Livros
+                    <i class="bi bi-book text-indigo-600"></i> Meus Livros
                 </h2>
                 {% include 'includes/addBookButton.html' %}
             </div>
@@ -127,7 +127,7 @@
                             <a href="{% url 'editar_livro' livro.id %}" 
                                class="bg-white rounded-full p-1.5 shadow-md hover:bg-neutral-100 transition" 
                                title="Editar">
-                                <i class="bi bi-pencil text-emerald-600 text-sm"></i>
+                                <i class="bi bi-pencil text-indigo-600 text-sm"></i>
                             </a>
                             <form method="post" action="{% url 'deletar_livro' livro.id %}" 
                                   onsubmit="return confirm('Tem certeza que deseja remover este livro?')">
@@ -142,7 +142,7 @@
                         <h3 class="font-bold text-neutral-800 mb-1 line-clamp-1">{{ livro.titulo|default:"Título indisponível" }}</h3>
                         <p class="text-sm text-neutral-500">{{ livro.autor|default:"Autor desconhecido" }}</p>
                         <div class="flex flex-wrap gap-1 mt-2">
-                            <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">{{ livro.get_estado_display }}</span>
+                            <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded-full">{{ livro.get_estado_display }}</span>
                             {% if livro.em_doacao %}
                                 <span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full">Doação</span>
                             {% else %}
@@ -155,7 +155,7 @@
                     </div>
                     <div class="px-4 pb-4">
                         <a href="{% url 'detalhe_livro' livro.id %}"
-                         class="block text-center text-emerald-600 text-sm font-medium hover:underline">
+                         class="block text-center text-indigo-600 text-sm font-medium hover:underline">
                             Ver detalhes →
                         </a>
                     </div>
@@ -164,7 +164,7 @@
             </div>
             {% else %}
             <div class="bg-white rounded-xl p-12 text-center">
-                <i class="bi bi-book text-6xl text-neutral-300"></i>
+                <i class="bi bi-book text-6xl text-neutral-400"></i>
                 <h3 class="text-xl font-semibold text-neutral-700 mt-4">Nenhum livro cadastrado</h3>
                 <p class="text-neutral-500 mt-2">Comece adicionando seus livros para troca ou doação.</p>
             </div>
@@ -174,7 +174,7 @@
 <!-- TAB SOLICITAÇÕES (pendentes) -->
 <div id="tab-solicitacoes" class="tab-content hidden">
     <h2 class="text-2xl font-bold text-neutral-800 mb-6">
-        <i class="bi bi-bell text-emerald-600"></i> Solicitações de Interesses
+        <i class="bi bi-bell text-indigo-600"></i> Solicitações de Interesses
     </h2>
 
     {% if solicitacoes_recebidas %}
@@ -198,7 +198,7 @@
         </div>
     </div>
     <div class="flex gap-2">
-        <a href="{% url 'aceitar_interesse' solicitacao.id %}" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-emerald-700 transition">
+        <a href="{% url 'aceitar_interesse' solicitacao.id %}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-indigo-700 transition">
             <i class="bi bi-check-lg"></i> Aceitar
         </a>
         <a href="{% url 'recusar_interesse' solicitacao.id %}" class="bg-red-100 text-red-700 px-4 py-2 rounded-lg text-sm hover:bg-red-200 transition">
@@ -210,7 +210,7 @@
     </div>
     {% else %}
     <div class="bg-white rounded-xl p-12 text-center">
-        <i class="bi bi-bell-slash text-6xl text-neutral-300"></i>
+        <i class="bi bi-bell-slash text-6xl text-neutral-400"></i>
         <h3 class="text-xl font-semibold text-neutral-700 mt-4">Nenhuma solicitação pendente</h3>
         <p class="text-neutral-500 mt-2">Quando alguém se interessar por um dos seus livros, aparecerá aqui.</p>
     </div>
@@ -220,7 +220,7 @@
         <!-- TAB 2: INTERESSES -->
         <div id="tab-interesses" class="tab-content hidden">
             <h2 class="text-2xl font-bold text-neutral-800 mb-6">
-                <i class="bi bi-heart text-emerald-600"></i> Livros que tenho Interesses
+                <i class="bi bi-heart text-indigo-600"></i> Livros que tenho Interesses
             </h2>
             
             {% if interesses_enviados %}   <!-- corrigido -->
@@ -250,7 +250,7 @@
                 <i class="bi bi-heart text-6xl text-neutral-300"></i>
                 <h3 class="text-xl font-semibold text-neutral-700 mt-4">Nenhum Interesses registrado</h3>
                 <p class="text-neutral-500 mt-2">Explore livros e manifeste Interesses em títulos que você quer.</p>
-                <a href="{% url 'explorar' %}" class="inline-block mt-6 bg-emerald-600 text-white px-6 py-2 rounded-xl hover:bg-emerald-700 transition">
+                <a href="{% url 'explorar' %}" class="inline-block mt-6 bg-indigo-600 text-white px-6 py-2 rounded-xl hover:bg-indigo-700 transition">
                     Explorar livros
                 </a>
             </div>
@@ -260,7 +260,7 @@
 <!-- TAB 3: TROCAS -->
 <div id="tab-trocas" class="tab-content hidden">
     <h2 class="text-2xl font-bold text-neutral-800 mb-6">
-        <i class="bi bi-arrow-left-right text-emerald-600"></i> Histórico de Trocas
+        <i class="bi bi-arrow-left-right text-indigo-600"></i> Histórico de Trocas
     </h2>
 
     {% if trocas %}
@@ -278,10 +278,10 @@
                         <h3 class="font-bold text-neutral-800">{{ troca.livro.titulo|default:"Título indisponível" }}</h3>
                         <p class="text-sm text-neutral-500">{{ troca.livro.autor|default:"Autor desconhecido" }}</p>
                         <div class="flex flex-wrap gap-2 mt-1">
-                            <span class="text-xs bg-green-200 text-green-600 px-2 py-0.5 rounded-full">
+                            <span class="text-xs bg-green-50 text-green-800 px-2 py-0.5 rounded-full">
                                 <i class="bi bi-person"></i> Dono: {{ troca.id_dono.nome }}
                             </span>
-                            <span class="text-xs bg-sky-200 text-sky-600 px-2 py-0.5 rounded-full">
+                            <span class="text-xs bg-sky-50 text-sky-800 px-2 py-0.5 rounded-full">
                                 <i class="bi bi-person-check"></i> Interessado: {{ troca.id_interessado.nome }}
                             </span>
                         </div>
@@ -290,7 +290,7 @@
                             {% if user == troca.id_dono %}
                                <p>
                                     <i class="bi bi-envelope"></i> E‑mail do interessado: 
-                                    <a href="mailto:{{ troca.id_interessado.email }}" class="text-emerald-600 hover:underline">
+                                    <a href="mailto:{{ troca.id_interessado.email }}" class="text-indigo-600 hover:underline">
                                         {{ troca.id_interessado.email }}
                                     </a>
                                 </p>
@@ -329,7 +329,7 @@
                                 Desistir
                             </a>
                             <a href="{% url 'finalizar_troca' troca.id %}"
-                               class="bg-emerald-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-emerald-700 transition"
+                               class="bg-indigo-600 text-white px-3 py-1.5 rounded-lg text-sm hover:bg-indigo-700 transition"
                                onclick="return confirm('Confirmar que a troca foi concluída com sucesso?')">
                                 Finalizar Troca
                             </a>
@@ -341,23 +341,23 @@
                         {% if user == troca.id_dono and not troca.avaliacao_dono %}
                             <div class="mt-3">
                                 <a href="{% url 'avaliar_troca' troca.id %}"
-                                   class="text-emerald-600 text-sm font-medium hover:underline">
+                                   class="text-indigo-600 text-sm font-medium hover:underline">
                                     <i class="bi bi-star"></i> Avaliar experiência
                                 </a>
                             </div>
                         {% elif user == troca.id_interessado and not troca.avaliacao_interessado %}
                             <div class="mt-3">
                                 <a href="{% url 'avaliar_troca' troca.id %}"
-                                   class="text-emerald-600 text-sm font-medium hover:underline">
+                                   class="text-indigo-600 text-sm font-medium hover:underline">
                                     <i class="bi bi-star"></i> Avaliar experiência
                                 </a>
                             </div>
                         {% elif user == troca.id_dono and troca.avaliacao_dono %}
-                            <div class="mt-3 text-xs text-neutral-400">
+                            <div class="mt-3 text-xs text-neutral-700">
                                 <i class="bi bi-check-circle"></i> Você já avaliou esta troca
                             </div>
                         {% elif user == troca.id_interessado and troca.avaliacao_interessado %}
-                            <div class="mt-3 text-xs text-neutral-400">
+                            <div class="mt-3 text-xs text-neutral-700">
                                 <i class="bi bi-check-circle"></i> Você já avaliou esta troca
                             </div>
                         {% endif %}
@@ -381,7 +381,7 @@
     <div class="bg-white rounded-xl shadow-md overflow-hidden">
         <div class="border-b border-neutral-200 px-6 py-4 bg-neutral-50">
             <h2 class="text-xl font-bold text-neutral-800">
-                <i class="bi bi-gear text-emerald-600"></i> Configurações da Conta
+                <i class="bi bi-gear text-indigo-600"></i> Configurações da Conta
             </h2>
         </div>
         <div class="p-6 space-y-8">
@@ -427,7 +427,7 @@
             </select>
         </div>
     </div>
-    <button type="submit" class="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700 transition">
+    <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition">
         Salvar alterações
     </button>
 </form>
@@ -456,7 +456,7 @@
 <!-- MODAL ALTERAR SENHA -->
 <div id="modalSenha" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
     <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 overflow-hidden">
-        <div class="bg-emerald-600 px-6 py-4 flex justify-between items-center">
+        <div class="bg-indigo-600 px-6 py-4 flex justify-between items-center">
             <h2 class="text-xl font-bold text-white">Alterar senha</h2>
             <button onclick="closeModal('modalSenha')" class="text-white text-2xl">&times;</button>
         </div>
@@ -465,7 +465,7 @@
             {{ password_form.as_p }}
             <div class="flex gap-3 justify-end mt-6">
                 <button type="button" onclick="closeModal('modalSenha')" class="px-4 py-2 border rounded-lg">Cancelar</button>
-                <button type="submit" class="bg-emerald-600 text-white px-4 py-2 rounded-lg">Alterar senha</button>
+                <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded-lg">Alterar senha</button>
             </div>
         </form>
     </div>
@@ -474,7 +474,7 @@
 <!-- MODAL DESATIVAR CONTA -->
 <div id="modalDesativar" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
     <div class="bg-white rounded-2xl shadow-xl w-full max-w-md mx-4 overflow-hidden">
-        <div class="bg-red-600 px-6 py-4 flex justify-between items-center">
+        <div class="bg-red-800 px-6 py-4 flex justify-between items-center">
             <h2 class="text-xl font-bold text-white">Desativar conta</h2>
             <button onclick="closeModal('modalDesativar')" class="text-white text-2xl">&times;</button>
         </div>
@@ -482,12 +482,12 @@
             {% csrf_token %}
             <p class="text-neutral-700">Tem certeza que deseja desativar sua conta permanentemente? Todos os seus livros e interesses serão removidos.</p>
             <label class="flex items-center gap-2">
-                <input type="checkbox" name="confirmar" required class="rounded text-red-600">
+                <input type="checkbox" name="confirmar" required class="rounded text-red-800">
                 <span class="text-sm">Confirmo que quero desativar minha conta</span>
             </label>
             <div class="flex gap-3 justify-end mt-6">
                 <button type="button" onclick="closeModal('modalDesativar')" class="px-4 py-2 border rounded-lg">Cancelar</button>
-                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg">Desativar permanentemente</button>
+                <button type="submit" class="bg-red-800 text-white px-4 py-2 rounded-lg">Desativar permanentemente</button>
             </div>
         </form>
     </div>
@@ -527,7 +527,7 @@
                 return;
             }
             try {
-                const response = await fetch(`api/estados-por-regiao?regiao=${regiao}`);
+                const response = await fetch(`/api/estados-por-regiao?regiao=${regiao}`);
                 const data = await response.json();
                 estadoSelect.innerHTML = '<option value="">Selecione um estado</option>';
                 data.estados.forEach(est => {
@@ -566,13 +566,13 @@
             // Remove active de todas as tabs
             tabs.forEach(t => {
                 t.classList.remove('active');
-                t.classList.remove('border-emerald-600');
+                t.classList.remove('border-indigo-600');
                 t.classList.add('border-transparent');
             });
             
             // Adiciona active na tab clicada
             tab.classList.add('active');
-            tab.classList.add('border-emerald-600');
+            tab.classList.add('border-indigo-600');
             tab.classList.remove('border-transparent');
             
             // Esconde todos os conteúdos
@@ -616,7 +616,7 @@
 
 <style>
     .tab-btn.active {
-        color: #059669;
+        color: #0b00a3;
     }
     .line-clamp-1 {
         display: -webkit-box;
@@ -648,7 +648,7 @@
                         if (tabBtn) {
                             const novoBadge = document.createElement('span');
                             novoBadge.id = 'badge-solicitacoes';
-                            novoBadge.className = 'ml-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5';
+                            novoBadge.className = 'ml-1 bg-red-400 text-white text-xs rounded-full px-1.5 py-0.5';
                             novoBadge.textContent = data.solicitacoes;
                             tabBtn.appendChild(novoBadge);
                         }
@@ -667,7 +667,7 @@
                         if (tabBtn) {
                             const novoBadge = document.createElement('span');
                             novoBadge.id = 'badge-interesses';
-                            novoBadge.className = 'ml-1 bg-red-500 text-white text-xs rounded-full px-1.5 py-0.5';
+                            novoBadge.className = 'ml-1 bg-red-400 text-white text-xs rounded-full px-1.5 py-0.5';
                             novoBadge.textContent = data.interesses;
                             tabBtn.appendChild(novoBadge);
                         }

@@ -35,7 +35,7 @@ class CadastroUsuarioForm(forms.ModelForm):
     password = forms.CharField(
         label='Senha',
         widget=forms.PasswordInput(attrs={
-            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-emerald-500 focus:border-emerald-500',
+            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-indigo-500 focus:border-indigo-500',
             'placeholder': 'Mínimo 8 caracteres',
             'required': True,
         }),
@@ -45,7 +45,7 @@ class CadastroUsuarioForm(forms.ModelForm):
     password_confirm = forms.CharField(
         label='Confirmar senha',
         widget=forms.PasswordInput(attrs={
-            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-emerald-500 focus:border-emerald-500',
+            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-indigo-500 focus:border-indigo-500',
             'placeholder': 'Digite a senha novamente',
             'required': True,
         })
@@ -54,7 +54,7 @@ class CadastroUsuarioForm(forms.ModelForm):
         label='Aceito os Termos de Uso',
         required=True,
         widget=forms.CheckboxInput(attrs={
-            'class': 'rounded text-emerald-600 focus:ring-emerald-500',
+            'class': 'rounded text-indigo-600 focus:ring-indigo-500',
             'required': True,
         })
     )
@@ -64,29 +64,29 @@ class CadastroUsuarioForm(forms.ModelForm):
         fields = ['nome', 'email', 'regiao', 'estado', 'cidade', 'zona']
         widgets = {
             'nome': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-emerald-500 focus:border-emerald-500',
+                'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-indigo-500 focus:border-indigo-500',
                 'placeholder': 'Insira seu nome completo',
                 'required': True,
             }),
             'email': forms.EmailInput(attrs={
-                'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-emerald-500 focus:border-emerald-500',
+                'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-indigo-500 focus:border-indigo-500',
                 'placeholder': 'Insira seu email (exemplo@email.com)',
                 'required': True,
             }),
             'regiao': forms.Select(attrs={
-                'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-emerald-500 focus:border-emerald-500 bg-white',
+                'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-indigo-500 focus:border-indigo-500 bg-white',
                 'required': True,
             }),
             'estado': forms.Select(attrs={
-                'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-emerald-500 focus:border-emerald-500 bg-white',
+                'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-indigo-500 focus:border-indigo-500 bg-white',
                 'required': True,
             }),
             'cidade': forms.TextInput(attrs={
-                'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-emerald-500 focus:border-emerald-500',
+                'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-indigo-500 focus:border-indigo-500',
                 'placeholder': 'Digite o nome da sua cidade',
             }),
             'zona': forms.Select(attrs={
-                'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-emerald-500 focus:border-emerald-500 bg-white',
+                'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-indigo-500 focus:border-indigo-500 bg-white',
             }),
         }
 
@@ -178,20 +178,20 @@ class AdicionarLivroForm(UsuarioMixin, forms.ModelForm):
         label='Código OpenLibrary (OLID)',
         required=False,
         widget=forms.TextInput(attrs={
-            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-emerald-500 focus:border-emerald-500',
+            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-indigo-500 focus:border-indigo-500',
             'placeholder': 'Ex: OL17887662W (opcional)',
         }),
     )
     titulo = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={
-            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-emerald-500 focus:border-emerald-500'
+            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-indigo-500 focus:border-indigo-500'
         })
     )
     autor = forms.CharField(
         required=False,
         widget=forms.TextInput(attrs={
-            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-emerald-500 focus:border-emerald-500'
+            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-2xl focus:ring-indigo-500 focus:border-indigo-500'
         })
     )
     sinopse = forms.CharField(
@@ -209,7 +209,7 @@ class AdicionarLivroForm(UsuarioMixin, forms.ModelForm):
     )
     em_doacao = forms.BooleanField(
         required=False,
-        widget=forms.CheckboxInput(attrs={'class': 'rounded text-emerald-600'})
+        widget=forms.CheckboxInput(attrs={'class': 'rounded text-indigo-600'})
     )
     disponivel = forms.BooleanField(
         initial=True,
@@ -278,13 +278,13 @@ class EditarLivroForm(forms.ModelForm):
         fields = ['estado', 'em_doacao', 'disponivel']
         widgets = {
             'estado': forms.Select(attrs={
-                'class': 'w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-emerald-500'
+                'class': 'w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-indigo-500'
             }),
             'em_doacao': forms.CheckboxInput(attrs={
-                'class': 'w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500'
+                'class': 'w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500'
             }),
             'disponivel': forms.CheckboxInput(attrs={
-                'class': 'w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500'
+                'class': 'w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500'
             }),
         }
 
@@ -337,7 +337,7 @@ class PasswordChangeForm(BasePasswordChangeForm):
         label='Senha atual',
         strip=False,
         widget=forms.PasswordInput(attrs={
-            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-emerald-500',
+            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-indigo-500',
             'placeholder': 'Digite sua senha atual'
         })
     )
@@ -345,7 +345,7 @@ class PasswordChangeForm(BasePasswordChangeForm):
         label='Nova senha',
         strip=False,
         widget=forms.PasswordInput(attrs={
-            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-emerald-500',
+            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-indigo-500',
             'placeholder': 'Mínimo de 8 caracteres'
         }),
         help_text='Sua senha deve ter pelo menos 8 caracteres e não pode ser totalmente numérica.'
@@ -354,7 +354,7 @@ class PasswordChangeForm(BasePasswordChangeForm):
         label='Confirmar nova senha',
         strip=False,
         widget=forms.PasswordInput(attrs={
-            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-emerald-500',
+            'class': 'w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-indigo-500',
             'placeholder': 'Digite a nova senha novamente'
         })
     )
@@ -366,6 +366,6 @@ class AvaliacaoTrocaForm(forms.Form):
     nota = forms.IntegerField(min_value=1, max_value=5, widget=forms.HiddenInput())
     comentario = forms.CharField(widget=forms.Textarea(attrs={
         'rows': 3,
-        'class': 'w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-emerald-500',
+        'class': 'w-full px-3 py-2 border border-gray-300 rounded-xl focus:ring-indigo-500',
         'placeholder': 'Compartilhe sua experiência (opcional)'
     }), required=False)

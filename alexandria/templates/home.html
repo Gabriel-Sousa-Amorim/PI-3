@@ -9,18 +9,18 @@
 
 
 <!-- Hero Section -->
-<section class="bg-gradient-to-br from-emerald-50 via-white to-gray-100 pt-5">
+<section class="bg-gradient-to-br from-indigo-50 via-white to-gray-100 pt-5">
     <div class="container mx-auto px-5 text-center md:text-left md:flex md:items-center md:justify-between py-20 md:py-28">
         <div class="md:w-1/2 space-y-6">
             <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800">
-                Encontre meios para <br> <span class="text-emerald-600">doar, trocar ou obter</span>, <br> livros <span class="text-emerald-600">do seu Interesses!</span>
+                Encontre meios para <br> <span class="text-indigo-600">doar, trocar ou obter</span>, <br> livros <span class="text-indigo-600">do seu Interesses!</span>
             </h1>
             <p class="text-lg text-gray-600 max-w-lg mx-auto md:mx-0">
                 Um pequeno projeto que visa conectar partes interessadas para doação e troca de livros na cidade de São Paulo e região metropolitana.
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <a href="{% url 'explorar' %}" class="bg-emerald-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-emerald-700 transition-smooth text-center">Quero trocar livros</a>
-                <a href="{% url 'como-funciona' %}" class="border border-emerald-300 text-emerald-700 px-8 py-3 rounded-full font-semibold hover:bg-emerald-50 transition-smooth text-center">Saiba mais</a>
+                <a href="{% url 'explorar' %}" class="bg-indigo-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-indigo-700 transition-smooth text-center">Quero trocar livros</a>
+                <a href="{% url 'como-funciona' %}" class="border border-indigo-300 text-indigo-700 px-8 py-3 rounded-full font-semibold hover:bg-indigo-50 transition-smooth text-center">Saiba mais</a>
             </div>
             <!--<p class="text-sm text-gray-500">12 regiões de SP</p>-->
         </div>
@@ -34,7 +34,7 @@
 <section class="py-16 bg-white">
     <div class="container mx-auto px-5">
         <div class="text-center max-w-2xl mx-auto mb-12">
-            <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Explore por <span class="text-emerald-600">região</span></h2>
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Explore por <span class="text-indigo-600">região</span></h2>
             <p class="text-gray-500 mt-2">Livros perto de você, em São Paulo e Grande SP.</p>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -43,32 +43,32 @@
                 <div class="text-3xl mb-3">📍</div>
                 <h3 class="font-bold text-xl">Zona Norte</h3>
                 <p class="text-gray-500 text-sm mt-1">Santana, Casa Verde, Fregesia do ó...</p>
-                <a href="{% url 'explorar' %}?regiao='NORTE'" class="text-emerald-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
+                <a href="{% url 'explorar' %}?regiao='NORTE'" class="text-indigo-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
             </div>
             <div class="bg-gray-50 rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-smooth">
                 <div class="text-3xl mb-3">📍</div>
                 <h3 class="font-bold text-xl">Zona Sul</h3>
                 <p class="text-gray-500 text-sm mt-1">Sacomã, Moema, Brooklin, Santo Amaro...</p>
-                <a href="{% url 'explorar' %}?regiao='SUL'" class="text-emerald-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
+                <a href="{% url 'explorar' %}?regiao='SUL'" class="text-indigo-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
             </div>
             <div class="bg-gray-50 rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-smooth">
                 <div class="text-3xl mb-3">📍</div>
                 <h3 class="font-bold text-xl">Zona Leste</h3>
                 <p class="text-gray-500 text-sm mt-1">Tatuapé, Itaquera, Penha...</p>
-                <a href="{% url 'explorar' %}?regiao='LESTE'" class="text-emerald-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
+                <a href="{% url 'explorar' %}?regiao='LESTE'" class="text-indigo-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
             </div>
             <div class="bg-gray-50 rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-smooth">
                 <div class="text-3xl mb-3">📍</div>
                 <h3 class="font-bold text-xl">Zona Oeste</h3>
                 <p class="text-gray-500 text-sm mt-1">Butantã, Lapa, Pinheiros...</p>
-                <a href="{% url 'explorar' %}?regiao='OESTE'" class="text-emerald-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
+                <a href="{% url 'explorar' %}?regiao='OESTE'" class="text-indigo-600 text-sm font-medium mt-3 inline-block">Ver livros →</a>
             </div>
         </div>
     </div>
 </section>
 
 <!-- Como Funciona -->
-<section class="py-16 bg-emerald-50">
+<section class="py-16 bg-indigo-50">
     <div class="container mx-auto px-5">
         <div class="text-center max-w-2xl mx-auto mb-10">
             <h2 class="text-3xl font-bold">📖 Como funciona a troca?</h2>
@@ -76,19 +76,19 @@
         </div>
         <div class="grid md:grid-cols-3 gap-8 text-center">
             <div class="bg-white p-6 rounded-2xl shadow-sm">
-                <div class="text-4xl bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-emerald-700">1</div>
-                <h3 class="font-bold text-xl mt-4">Cadastre seus livros</h3>
-                <p class="text-gray-500 mt-2">Adicione os livros que você quer doar ou trocar e suas informações.</p>
+                <div class="text-4xl bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-indigo-700">1</div>
+                <h3 class="font-bold text-2xl mt-4">Cadastre seus livros</h3>
+                <p class="text-indigo-500 mt-2 text-xl">Adicione os livros que você quer doar ou trocar e suas informações.</p>
             </div>
             <div class="bg-white p-6 rounded-2xl shadow-sm">
-                <div class="text-4xl bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-emerald-700">2</div>
-                <h3 class="font-bold text-xl mt-4">Encontre interessados</h3>
-                <p class="text-gray-500 mt-2">Enquanto espera por interessados, explore o catálogo.</p>
+                <div class="text-4xl bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-indigo-700">2</div>
+                <h3 class="font-bold text-2xl mt-4">Encontre interessados</h3>
+                <p class="text-indigo-500 mt-2 text-xl">Enquanto espera por interessados, explore o catálogo.</p>
             </div>
             <div class="bg-white p-6 rounded-2xl shadow-sm">
-                <div class="text-4xl bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-emerald-700">3</div>
-                <h3 class="font-bold text-xl mt-4">Combine e troque</h3>
-                <p class="text-gray-500 mt-2">Marque um ponto de encontro e compartilhe histórias.</p>
+                <div class="text-4xl bg-indigo-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto text-indigo-700">3</div>
+                <h3 class="font-bold text-2xl mt-4">Combine e troque</h3>
+                <p class="text-indigo-500 mt-2 text-xl">Marque um ponto de encontro e compartilhe histórias.</p>
             </div>
         </div>
     </div>

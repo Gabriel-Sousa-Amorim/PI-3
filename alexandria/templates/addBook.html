@@ -4,7 +4,7 @@
 {% block title %}Alexandria | Adicionar Livro{% endblock %}
 
 {% block content %}
-<div class="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-gray-100 py-12">
+<div class="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-gray-100 py-12">
   <div class="container mx-auto px-5 max-w-4xl">
     {% if messages %}
       <div class="mb-6 space-y-2">
@@ -17,7 +17,7 @@
     {% endif %}
 
     <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
-      <div class="bg-emerald-600 px-6 py-4">
+      <div class="bg-indigo-600 px-6 py-4">
         <h1 class="text-2xl font-bold text-white flex items-center gap-2">
           <i class="bi bi-plus-circle"></i> Adicionar livro
         </h1>
@@ -28,10 +28,10 @@
           <label class="block text-lg font-semibold text-gray-700 mb-2">🔍 Buscar livro na Open Library</label>
           <div class="flex flex-col md:flex-row gap-3">
             <input type="text" id="search-input"
-                   class="flex-1 px-6 py-4 text-lg border border-gray-300 rounded-2xl focus:ring-emerald-500"
+                   class="flex-1 px-6 py-4 text-lg border border-gray-300 rounded-2xl focus:ring-indigo-500"
                    placeholder="Título do livro">
             <button id="search-button"
-                    class="bg-emerald-600 text-white px-8 py-4 rounded-2xl hover:bg-emerald-700 transition font-semibold">
+                    class="bg-indigo-600 text-white px-8 py-4 rounded-2xl hover:bg-indigo-700 transition font-semibold">
               <i class="bi bi-search"></i> Pesquisar
             </button>
           </div>
@@ -96,7 +96,7 @@
                 </select>
               </div>
               <div class="flex items-center gap-2 mt-7">
-                <input type="checkbox" name="em_doacao" id="em_doacao" class="w-5 h-5 text-emerald-600">
+                <input type="checkbox" name="em_doacao" id="em_doacao" class="w-5 h-5 text-indigo-600">
                 <label for="em_doacao" class="font-medium text-gray-700">Disponível para doação</label>
               </div>
             </div>
@@ -108,7 +108,7 @@
               ✏️ Cadastrar manualmente
             </button>
             <button type="submit"
-                    class="bg-emerald-600 text-white px-8 py-2 rounded-2xl hover:bg-emerald-700 transition font-semibold">
+                    class="bg-indigo-600 text-white px-8 py-2 rounded-2xl hover:bg-indigo-700 transition font-semibold">
               <i class="bi bi-check-lg"></i> Adicionar livro
             </button>
           </div>
@@ -266,7 +266,7 @@
                 <div class="flex-1">
                   <h3 class="font-bold">${escapeHtml(livro.titulo)}</h3>
                   <p class="text-sm text-gray-600">${escapeHtml(livro.autor)}</p>
-                  <button class="mt-2 bg-emerald-600 text-white text-sm px-3 py-1 rounded-full select-btn" 
+                  <button class="mt-2 bg-indigo-600 text-white text-sm px-3 py-1 rounded-full select-btn" 
                           data-key="${livro.key}">
                     Selecionar
                   </button>

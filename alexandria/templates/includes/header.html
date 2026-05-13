@@ -4,7 +4,7 @@
         <!-- Logo -->
         <div>
             <a href="{% url 'home' %}"
-                class="flex items-center gap-2 text-2xl font-bold text-emerald-800 dark:text-emerald-200">
+                class="flex items-center gap-2 text-2xl font-bold text-indigo-800 dark:text-indigo-200">
                 <i class="bi bi-book-half"></i> Alexandria
             </a>
         </div>
@@ -12,74 +12,151 @@
         <!-- Desktop Menu -->
         <div class="hidden md:flex space-x-8 text-neutral-600 font-medium dark:text-neutral-300">
             <a href="{% url 'home' %}"
-                class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-smooth">Início</a>
+                class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-smooth">Início</a>
             <a href="{% url 'explorar' %}"
-                class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-smooth">Explorar</a>
+                class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-smooth">Explorar</a>
             <a href="{% url 'como-funciona' %}"
-                class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-smooth">Como Funciona</a>
+                class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-smooth">Como Funciona</a>
         </div>
 
-            {% if user.is_authenticated %}
-            <div class="flex items-center gap-4">
-                <span class="text-neutral-700 dark:text-neutral-300">Olá, {{ user.nome }}!</span>
-                <a href="{% url 'perfil' %}"
-                    class="bg-emerald-600 text-white px-4 py-2 rounded-2xl hover:bg-emerald-800 transition flex gap-2 dark:bg-emerald-700 dark:hover:bg-emerald-600">
-                    <i class="bi bi-person"></i> Perfil
-                </a>
-                <a href="{% url 'logout' %}"
-                    class="text-red-600 hover:text-red-800 transition flex gap-2 px-4 py-2 border border-red-400 rounded-2xl dark:text-red-400 dark:hover:text-red-300 dark:border-red-700">
-                    <i class="bi bi-box-arrow-left"></i> Sair
-                </a>
-            </div>
-            {% else %}
-            <div class="flex items-center gap-5">
-                <a href="{% url 'signin' %}"
-                    class="border-2 border-emerald-800 text-emerald-800 px-4 py-2 rounded-2xl hover:bg-emerald-200 transition font-black flex gap-2 dark:border-emerald-400 dark:text-emerald-400 dark:hover:bg-emerald-800">
-                    <i class="bi bi-at"></i> Cadastrar
-                </a>
-                <a href="{% url 'login' %}"
-                    class="bg-emerald-800 text-white px-4 py-2 rounded-2xl hover:bg-emerald-700 transition font-black flex gap-2 dark:bg-emerald-600 dark:hover:bg-emerald-500">
-                    <i class="bi bi-box-arrow-in-right"></i> Entrar
-                </a>
-            </div>
-            {% endif %}
-        </div>
-
-        <!-- Mobile Menu Button -->
-        <div class="md:hidden">
-            <button id="menu-btn" class="text-neutral-600 focus:outline-none dark:text-neutral-300" aria-label="Menu">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
-                    </path>
-                </svg>
+        {% if user.is_authenticated %}
+        <div class="flex items-center gap-4">
+            <!-- DARK MODE TOGGLE (Desktop) -->
+            <button id="darkModeToggle" class="text-neutral-600 dark:text-neutral-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition text-xl cursor-pointer" aria-label="Alternar modo escuro">
+                <i class="bi bi-moon-fill" id="darkModeIcon"></i>
             </button>
+
+            <span class="text-neutral-700 dark:text-neutral-300">Olá, {{ user.nome }}!</span>
+            <a href="{% url 'perfil' %}"
+                class="bg-indigo-600 text-white px-4 py-2 rounded-2xl hover:bg-indigo-800 transition flex gap-2 dark:bg-indigo-700 dark:hover:bg-indigo-600">
+                <i class="bi bi-person"></i> Perfil
+            </a>
+            <a href="{% url 'logout' %}"
+                class="text-red-800 hover:text-red-800 transition flex gap-2 px-4 py-2 border border-red-800 rounded-2xl dark:text-red-800 dark:hover:text-red-500 dark:border-red-700 font-bold">
+                <i class="bi bi-box-arrow-left"></i> Sair
+            </a>
         </div>
+        {% else %}
+        <div class="flex items-center gap-5">
+            <!-- DARK MODE TOGGLE (Desktop) -->
+            <button id="darkModeToggle" class="text-neutral-600 dark:text-neutral-300 hover:text-indigo-600 dark:hover:text-indigo-400 transition text-xl cursor-pointer" aria-label="Alternar modo escuro">
+                <i class="bi bi-moon-fill" id="darkModeIcon"></i>
+            </button>
+
+            <a href="{% url 'signin' %}"
+                class="border-2 border-indigo-800 text-indigo-800 px-4 py-2 rounded-2xl hover:bg-indigo-200 transition font-black flex gap-2 dark:border-indigo-400 dark:text-indigo-400 dark:hover:bg-indigo-800">
+                <i class="bi bi-at"></i> Cadastrar
+            </a>
+            <a href="{% url 'login' %}"
+                class="bg-indigo-800 text-white px-4 py-2 rounded-2xl hover:bg-indigo-700 transition font-black flex gap-2 dark:bg-indigo-600 dark:hover:bg-indigo-500">
+                <i class="bi bi-box-arrow-in-right"></i> Entrar
+            </a>
+        </div>
+        {% endif %}
     </div>
+
+    <!-- Mobile Menu Button -->
+    <div class="md:hidden flex items-center justify-between px-5 py-2">
+    <button id="menu-btn" class="text-neutral-600 focus:outline-none focus:ring-2 focus:ring-emerald-500 dark:text-neutral-300" aria-label="Menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+    </button>
+
+    <!-- Dark mode toggle acessível -->
+    <button id="darkModeToggleMobile"
+            class="text-neutral-600 dark:text-neutral-300 hover:text-emerald-600 dark:hover:text-emerald-400 text-xl cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded-full p-1"
+            aria-label="Alternar modo escuro"
+            aria-pressed="false">
+        <i class="bi bi-moon-fill" aria-hidden="true"></i>
+        <span class="sr-only">Ativar modo escuro</span>
+    </button>
+</div>
 
     <!-- Mobile Menu (dropdown) -->
     <div id="mobile-menu"
         class="md:hidden hidden bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-700">
         <div class="flex flex-col space-y-3 px-5 py-4 text-neutral-600 dark:text-neutral-300">
-            <a href="{% url 'home' %}" class="hover:text-emerald-600 dark:hover:text-emerald-400 py-2">Início</a>
-            <a href="{% url 'explorar' %}" class="hover:text-emerald-600 dark:hover:text-emerald-400 py-2">Explorar</a>
-            <a href="{% url 'como-funciona' %}" class="hover:text-emerald-600 dark:hover:text-emerald-400 py-2">Como
-                Funciona</a>
+            <a href="{% url 'home' %}" class="hover:text-indigo-600 dark:hover:text-indigo-400 py-2">Início</a>
+            <a href="{% url 'explorar' %}" class="hover:text-indigo-600 dark:hover:text-indigo-400 py-2">Explorar</a>
+            <a href="{% url 'como-funciona' %}" class="hover:text-indigo-600 dark:hover:text-indigo-400 py-2">Como Funciona</a>
             <hr class="my-2 border-neutral-200 dark:border-neutral-700">
             {% if user.is_authenticated %}
-            <a href="{% url 'perfil' %}" class="flex gap-2 items-center py-2"><i class="bi bi-person"></i> Meu
-                Perfil{% if pending_requests_count > 0 %}
-                <span
-                    class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
+            <a href="{% url 'perfil' %}" class="flex gap-2 items-center py-2 relative">
+                <i class="bi bi-person"></i> Meu Perfil
+                {% if pending_requests_count > 0 %}
+                <span class="absolute -top-1 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center animate-pulse">
                     {{ pending_requests_count }}
                 </span>
-                {% endif %}</a>
-            <a href="{% url 'logout' %}" class="flex gap-2 items-center py-2 text-red-600 dark:text-red-400"><i
-                    class="bi bi-box-arrow-left"></i> Sair</a>
+                {% endif %}
+            </a>
+            <a href="{% url 'logout' %}" class="flex gap-2 items-center py-2 text-red-800 dark:text-red-800 border-red-800 font-bold">
+                <i class="bi bi-box-arrow-left"></i> Sair
+            </a>
             {% else %}
             <a href="{% url 'signin' %}" class="flex gap-2 items-center py-2"><i class="bi bi-at"></i> Cadastrar</a>
-            <a href="{% url 'login' %}" class="flex gap-2 items-center py-2"><i class="bi bi-box-arrow-in-right"></i>
-                Entrar</a>
+            <a href="{% url 'login' %}" class="flex gap-2 items-center py-2"><i class="bi bi-box-arrow-in-right"></i> Entrar</a>
             {% endif %}
         </div>
     </div>
 </nav>
+
+<script>
+  (function() {
+    // Executa assim que o DOM estiver pronto
+    function initDarkMode() {
+      const html = document.documentElement;
+      const toggleBtns = document.querySelectorAll('#darkModeToggle, #darkModeToggleMobile');
+      
+      // Se não achou nenhum botão, exibe aviso no console (para debug)
+      if (toggleBtns.length === 0) {
+        console.warn('Dark mode buttons not found! Check IDs: #darkModeToggle and #darkModeToggleMobile');
+        return;
+      }
+
+      // Função para aplicar o tema e atualizar ícones
+      function setTheme(theme) {
+        if (theme === 'dark') {
+          html.classList.add('dark');
+          localStorage.setItem('theme', 'dark');
+          // Atualiza todos os ícones para sol
+          document.querySelectorAll('#darkModeToggle i, #darkModeToggleMobile i').forEach(icon => {
+            icon.className = 'bi bi-sun-fill';
+          });
+        } else {
+          html.classList.remove('dark');
+          localStorage.setItem('theme', 'light');
+          // Atualiza todos os ícones para lua
+          document.querySelectorAll('#darkModeToggle i, #darkModeToggleMobile i').forEach(icon => {
+            icon.className = 'bi bi-moon-fill';
+          });
+        }
+      }
+
+      // Carrega preferência salva ou do sistema
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        setTheme(savedTheme);
+      } else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(prefersDark ? 'dark' : 'light');
+      }
+
+      // Adiciona evento de clique em cada botão
+      toggleBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          const isDark = html.classList.contains('dark');
+          setTheme(isDark ? 'light' : 'dark');
+        });
+      });
+    }
+
+    // Garante que o DOM está carregado
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initDarkMode);
+    } else {
+      initDarkMode();
+    }
+  })();
+</script>

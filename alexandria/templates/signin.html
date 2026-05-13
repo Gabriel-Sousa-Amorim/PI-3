@@ -8,7 +8,7 @@
 <section class="py-16 bg-neutral-50">
 
     <div class="container mx-auto px-5 max-w-5xl flex flex-col gap-5">
-        <h1 class="text-3xl text-emerald-600 md:text-5xl font-bold">
+        <h1 class="text-3xl text-indigo-600 md:text-5xl font-bold">
             Cadastro
         </h1>
 
@@ -156,7 +156,7 @@
                         <label class="flex items-center gap-2 mb-4">
                             {{ form.terms }}
                             <span class="text-sm text-neutral-600">
-                                Aceito os <a href="#" class="text-emerald-800 hover:underline">Termos de Uso</a>
+                                Aceito os <a href="#" class="text-indigo-800 hover:underline">Termos de Uso</a>
                             </span>
                         </label>
                         {% if form.terms.errors %}
@@ -165,14 +165,14 @@
 
                         <!-- Botão de Submit -->
                         <button type="submit"
-                            class="w-full bg-emerald-800 text-white py-2 rounded-2xl font-semibold hover:bg-emerald-700 transition-smooth">
+                            class="w-full bg-indigo-800 text-white py-2 rounded-2xl font-semibold hover:bg-indigo-700 transition-smooth">
                             Criar conta gratuita
                         </button>
                     </form>
                     <!-- Link para Login -->
                     <p class="text-center text-sm text-neutral-600 mt-4">
                         Já possui conta? <a href="{% url 'login' %}"
-                            class="text-emerald-800 font-semibold hover:underline">Faça login aqui</a>
+                            class="text-indigo-800 font-semibold hover:underline">Faça login aqui</a>
                     </p>
                 </div>
             </div>

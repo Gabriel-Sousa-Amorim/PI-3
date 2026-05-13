@@ -5,10 +5,10 @@
 
 {% block content %}
 <!-- Hero Section -->
-<section class="bg-emerald-50 py-16 md:py-24 dark:bg-emerald-950" aria-labelledby="hero-heading">
+<section class="bg-indigo-50 py-16 md:py-24 dark:bg-indigo-950" aria-labelledby="hero-heading">
     <div class="container mx-auto px-5 text-center">
         <h1 id="hero-heading" class="text-3xl md:text-5xl font-bold text-neutral-800 dark:text-white">
-            Explore o <span class="text-emerald-600 dark:text-emerald-400">acervo colaborativo</span>
+            Explore o <span class="text-indigo-600 dark:text-indigo-400">acervo colaborativo</span>
         </h1>
         <p class="text-neutral-600 dark:text-neutral-300 mt-4 max-w-2xl mx-auto">
             Livros disponíveis para troca ou doação em São Paulo e Grande SP. Use os filtros para encontrar o que mais
@@ -34,7 +34,7 @@
                         aria-hidden="true"></i>
                     <input type="text" name="search" id="search" value="{{ filtros.search }}"
                         placeholder="Título, autor..."
-                        class="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-2xl focus:ring-emerald-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white dark:placeholder-neutral-400"
+                        class="w-full pl-10 pr-4 py-2 border border-neutral-300 rounded-2xl focus:ring-indigo-500 dark:bg-neutral-700 dark:border-neutral-600 dark:text-white dark:placeholder-neutral-400"
                         aria-label="Buscar por título ou autor">
                 </div>
             </div>
@@ -89,13 +89,13 @@
             </div>
 
             <button type="submit"
-                class="bg-emerald-600 text-white px-6 py-2 rounded-2xl hover:bg-emerald-700 transition dark:bg-emerald-700 dark:hover:bg-emerald-600"
+                class="bg-indigo-600 text-white px-6 py-2 rounded-2xl hover:bg-indigo-700 transition dark:bg-indigo-700 dark:hover:bg-indigo-600"
                 aria-label="Aplicar filtros">
                 <i class="bi bi-funnel" aria-hidden="true"></i>
                 Filtrar
             </button>
             <a href="{% url 'explorar' %}"
-                class="text-emerald-600 hover:text-emerald-800 text-sm font-medium px-6 py-2 dark:text-emerald-400 dark:hover:text-emerald-300"
+                class="text-indigo-600 hover:text-indigo-800 text-sm font-medium px-6 py-2 dark:text-indigo-400 dark:hover:text-indigo-300"
                 aria-label="Limpar todos os filtros">
                 <i class="bi bi-x-octagon" aria-hidden="true"></i>
                 Limpar filtros
@@ -134,7 +134,7 @@
                     <p class="text-sm text-neutral-500 dark:text-neutral-400">{{ livro.autor }}</p>
                     <div class="flex flex-wrap gap-2 mt-2">
                         <span
-                            class="text-xs bg-emerald-100 text-emerald-800 px-2 py-1 rounded-2xl dark:bg-emerald-900 dark:text-emerald-300">
+                            class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded-2xl dark:bg-indigo-900 dark:text-indigo-300">
                             {{ livro.get_estado_display }}
                         </span>
                         {% if livro.em_doacao %}
@@ -153,7 +153,7 @@
                         {{ livro.sinopse|truncatewords:20 }}
                     </p>
                     <a href="{% url 'detalhe_livro' livro.id %}"
-                        class="mt-4 bg-emerald-600 font-bold py-2 text-center rounded-2xl hover:bg-emerald-700 transition text-md font-medium cursor-pointer text-white dark:bg-emerald-700 dark:hover:bg-emerald-600"
+                        class="mt-4 bg-indigo-600 font-bold py-2 text-center rounded-2xl hover:bg-indigo-700 transition text-md font-medium cursor-pointer text-white dark:bg-indigo-700 dark:hover:bg-indigo-600"
                         aria-label="Ver detalhes do livro {{ livro.titulo|default:'sem título' }}">
                         Ver o livro
                     </a>
@@ -165,7 +165,7 @@
                 <p class="text-neutral-500 mt-4 dark:text-neutral-400">Nenhum livro encontrado com os filtros
                     selecionados.</p>
                 <a href="{% url 'explorar' %}"
-                    class="mt-4 inline-block text-emerald-600 underline dark:text-emerald-400">
+                    class="mt-4 inline-block text-indigo-600 underline dark:text-indigo-400">
                     Limpar filtros
                 </a>
             </div>
@@ -182,7 +182,7 @@
                 «
             </a>
             {% endif %}
-            <span class="px-3 py-1 bg-emerald-600 text-white rounded dark:bg-emerald-700">
+            <span class="px-3 py-1 bg-indigo-600 text-white rounded dark:bg-indigo-700">
                 {{ page_obj.number }}
             </span>
             {% if page_obj.has_next %}
@@ -198,7 +198,7 @@
 </section>
 
 <div>
-        <a href="{% url 'adicionar_livro' %}" class="fixed bottom-6 right-6 bg-emerald-600 text-white p-3 rounded-full shadow-lg hover:bg-emerald-700 transition z-20">
+        <a href="{% url 'adicionar_livro' %}" class="fixed bottom-6 right-6 bg-indigo-600 text-white p-3 rounded-full shadow-lg hover:bg-indigo-700 transition z-20">
             <i class="bi bi-plus-lg text-xl"></i> Adicionar um livro
         </a>
 </div>
