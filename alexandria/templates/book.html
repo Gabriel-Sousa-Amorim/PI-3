@@ -142,16 +142,22 @@
                                     {% endwith %}
                                 {% endfor %}
                             </div>
-                            <span class="text-sm text-neutral-600">{{ confiabilidade_dono|floatformat:1 }} / 5</span>
-                        {% else %}
-                            <div class="flex items-center gap-0.5">
-                                {% for i in "12345"|make_list %}
+                            <span class="text-sm text-neutral-600">{{ confiabilidade_dono|floatformat:1 }} ({{ total_avaliacoes }} 
+                                {% if total_avaliacoes <= 1 %}
+                                    avaliação
+                                {% else %}
+                                    avaliações
+                                {% endif %})
+                                </span>
+                            {% else %}
+                                <div class="flex items-center gap-0.5">
+                                    {% for i in "12345"|make_list %}
                                     <i class="bi bi-star text-neutral-300 text-sm"></i>
-                                {% endfor %}
-                            </div>
+                                    {% endfor %}
+                                </div>
                             <span class="text-sm text-neutral-400">Ainda não avaliado</span>
-                        {% endif %}
-                    </div>
+                            {% endif %}
+                        </div>
 
                     <!-- Badges de estado e doação -->
                     <div class="flex flex-wrap gap-2 justify-center md:justify-start mt-2">

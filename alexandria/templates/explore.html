@@ -139,7 +139,7 @@
                         </span>
                         {% if livro.em_doacao %}
                         <span
-                            class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-2xl dark:bg-blue-900 dark:text-blue-300">
+                            class="text-xs bg-green-100 text-green-950 px-2 py-1 rounded-2xl dark:bg-blue-900 dark:text-blue-300">
                             Para doação
                         </span>
                         {% else %}
@@ -172,28 +172,39 @@
             {% endfor %}
         </div>
 
-        <!-- Paginação (opcional) -->
         {% if page_obj.has_other_pages %}
-        <nav class="flex justify-center mt-8 gap-2" aria-label="Navegação de páginas">
-            {% if page_obj.has_previous %}
-            <a href="?page=1{{ request.GET.urlencode|cut:'page=' }}"
-                class="px-3 py-1 border rounded dark:border-neutral-700 dark:text-neutral-300"
-                aria-label="Primeira página">
-                «
-            </a>
-            {% endif %}
-            <span class="px-3 py-1 bg-indigo-600 text-white rounded dark:bg-indigo-700">
-                {{ page_obj.number }}
-            </span>
-            {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}{% for key, value in request.GET.items %}{% if key != 'page' %}&{{ key }}={{ value }}{% endif %}{% endfor %}"
-                class="px-3 py-1 border rounded dark:border-neutral-700 dark:text-neutral-300"
-                aria-label="Próxima página">
-                »
-            </a>
-            {% endif %}
-        </nav>
-        {% endif %}
+<nav class="flex justify-center mt-8 gap-2" aria-label="Navegação de páginas">
+    {% if page_obj.has_previous %}
+    <a href="?page=1&{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}{% endif %}{% endfor %}"
+        class="px-3 py-1 border rounded dark:border-neutral-700 dark:text-neutral-300"
+        aria-label="Primeira página">
+        «
+    </a>
+    <a href="?page={{ page_obj.previous_page_number }}&{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}{% endif %}{% endfor %}"
+        class="px-3 py-1 border rounded dark:border-neutral-700 dark:text-neutral-300"
+        aria-label="Página anterior">
+        ‹
+    </a>
+    {% endif %}
+    
+    <span class="px-3 py-1 bg-indigo-600 text-white rounded dark:bg-indigo-700">
+        {{ page_obj.number }}
+    </span>
+    
+    {% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}&{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}{% endif %}{% endfor %}"
+        class="px-3 py-1 border rounded dark:border-neutral-700 dark:text-neutral-300"
+        aria-label="Próxima página">
+        ›
+    </a>
+    <a href="?page={{ page_obj.paginator.num_pages }}&{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}{% endif %}{% endfor %}"
+        class="px-3 py-1 border rounded dark:border-neutral-700 dark:text-neutral-300"
+        aria-label="Última página">
+        »
+    </a>
+    {% endif %}
+</nav>
+{% endif %}
     </div>
 </section>
 

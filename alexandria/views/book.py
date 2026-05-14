@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 from django.views.generic import DetailView
-from alexandria.models import Livro, Interesses   # <-- Use Interesses (singular)
+from alexandria.models import Livro, Interesses, Troca   # <-- Use Interesses (singular)
 from django.core.cache import cache
 import requests
 from django.shortcuts import get_object_or_404, redirect, render
@@ -45,6 +45,17 @@ class BookDetailView(DetailView):
             show_donor = interesse_aceito is not None
         
         context['show_donor_details'] = show_donor
+
+        # TOTAL DE AVALIAÇÕES DO LIVRO
+        # Pega todas as trocas concluídas deste livro
+        trocas_concluidas = Troca.objects.filter(id_dono=dono.id, status='C')
+
+        # Conta quantas avaliações existem (nota do dono + nota do interessado)
+        total_avaliacoes = trocas_concluidas.exclude(avaliacao_dono__isnull=True).count()
+        total_avaliacoes += trocas_concluidas.exclude(avaliacao_interessado__isnull=True).count()
+
+        context['total_avaliacoes'] = total_avaliacoes
+
         return context
 
 
