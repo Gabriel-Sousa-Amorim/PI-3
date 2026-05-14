@@ -1,6 +1,13 @@
 asgiref==3.11.1
 bcrypt==5.0.0
+certifi==2026.4.22
+charset-normalizer==3.4.7
 django==6.0.3
+idna==3.13
 mysqlclient==2.2.8
 python-dotenv==1.2.2
+requests==2.33.1
 sqlparse==0.5.5
+tenacity==9.1.4
+urllib3==2.6.3
+whitenoise==6.12.0
