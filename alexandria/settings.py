@@ -39,6 +39,10 @@ ALLOWED_HOSTS = [
     "127.0.0.1",
 ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://pi-3-production-baad.up.railway.app",
+]
+
 # Application definition
 
 INSTALLED_APPS = [
