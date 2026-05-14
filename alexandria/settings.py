@@ -29,7 +29,6 @@ SECRET_KEY = os.getenv(
     "django-insecure-dev-key"
 )
 print(SECRET_KEY)
-SECRET_KEY = os.getenv("SERVER_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
